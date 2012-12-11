@@ -83,6 +83,10 @@ Netflics.UIManager = function () {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-$(document).ready(function () {
+(function () {
     'use strict';
-});
+    var isMobile = $.browser.mobile;
+    if (isMobile) {
+        window.location.replace("/mobile/");
+    }
+}());
