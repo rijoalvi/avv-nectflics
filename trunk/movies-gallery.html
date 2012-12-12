@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta name="keywords" content="movies, netflics">
@@ -18,8 +18,8 @@ $(function() {
 	//	Scrolled by user interaction
 	$('#cat-1').carouFredSel({
 		auto: false,
-		prev: '#prev2',
-		next: '#next2',
+		prev: '#prev',
+		next: '#next',
 		pagination: "#pager2",
 		mousewheel: true,
 		swipe: {
@@ -32,7 +32,12 @@ $(function() {
 <link type="text/css" href="css/general/styles.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="wrapper">
+	<header>
+		<div id="logo"></div>
+		<div id="search-box"></div>
+	</header>
+	<article>
+		<div id="wrapper">
         <h1>Movies Gallery</h1>
 			<div class="list_carousel">
 				<ul id="cat-1">
@@ -48,26 +53,27 @@ $(function() {
 					<li>S</li>
 					<li>e</li>
 					<li>l</li>
-					<li> </li>
+					<li>U</li>
 				</ul>
+				<div class="arrow prev" id="prev" style="float: left;"><a href="#">&lt;</a></div>
+				<div class="arrow next" id="next" style="float: right;"><a href="#">&gt;</a></div>
 				<div class="clearfix"></div>
-				<a id="prev2" class="prev" href="#">&lt;</a>
-				<a id="next2" class="next" href="#">&gt;</a>
 				<div id="pager2" class="pager"></div>
 			</div>
 			<br />
 	        <p id="userMessage"></p>
 	        <div id="fb-root"></div>
 	        <div class="content-collection"></div>
-	        <div class="slogan">
+	        <!--<div class="slogan">
 	        	<p>World Biggest Movies Collection</p>
-	        </div>
-    </div>
-    <div id="footer">
+	        </div>-->
+    	</div>
+	</article>
+    <footer>
     	<p>El uso del servicio de Netflics y de este sitio web constituye la aceptación de nuestros Términos de uso y nuestra Política de privacidad.<br />
     	&reg; 1997-2012 Netflics, Inc. Todos los derechos reservados. Patentes de los EE. UU. números 6.584.450; 7.024.381; 7.631.323; 7.403.910 y 7.617.127. (us-east-1 71fbfb0e CR) [2721/2 - , es] 
     	</p>
-    </div>
+    </footer>
     <script type="text/javascript" src="js/general/netflics.js"></script>
 </body>
 </html>
