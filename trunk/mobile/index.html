@@ -2,12 +2,24 @@
 <html>
     <head>
         <meta  charset="utf-8"/>
-		<link rel="stylesheet" type="text/css" media="screen" href="css/style.css"/>
-		<script type="text/javascript" src="js/components/jquery.js"></script>
-		<script type="text/javascript" src="js/general/service.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,800italic,400,800' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css"/>
+        <script type="text/javascript" src="js/components/jquery.js"></script>
+        <script type="text/javascript" src="js/general/service.js"></script>
         <title></title>
     </head>
-    <body>
-        <div id="wrapper"></div>
+	<body>
+	    <div id="login_content">
+	    	<div id="floater"></div>
+	    	<div id="login_logo"></div>
+			<div id="login-box">
+	            <p id="userMessage">Login using your Facebook account:</p>
+	            <div class="fb-login-button" data-show-faces="true" data-width="400" data-max-rows="3"></div>
+	            <div id="fb-root"></div>
+	        </div>	    	
+	    </div>
+	    <div id="footer">
+	    	<p>El uso del servicio de Netflics y de este sitio web constituye la aceptación de nuestros Términos de uso y nuestra Política de privacidad.<br />&reg;2012 Netflics, Inc. Todos los derechos reservados.</p>
+	    </div>            
     </body>
 </html>

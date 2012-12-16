@@ -1,5 +1,82 @@
-#wrapper {
-	width : 900px;
-	height: 900px;
-	background: #0489B1;
-}
+* {
+  margin: 0; }
+
+body {
+  background-attachment: fixed;
+  background-color: #e1e1e1;
+  font-family: 'Open Sans', sans-serif;
+  width: 100%; }
+  body #main_header {
+    height: 45px;
+    background-color: #206499;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#206499), color-stop(99%, #092236)); }
+    body #main_header #logo {
+      height: 45px;
+      background-image: url("../images/netflics-logo.png");
+      background-size: auto 45px;
+      background-repeat: no-repeat; }
+  body #content {
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 2px 2px #ccc;
+    box-shadow: 0 0 2px 2px #ccc;
+    min-height: 100%;
+    width: 100%;
+    padding-top: 1em;
+    padding-bottom: 10px; }
+    body #content .contentWrapper {
+      position: relative;
+      left: 0;
+      width: 3000px;
+      height: 1060px; }
+    body #content .contentBox {
+      width: 41.5%;
+      height: 100%;
+      float: left;
+      padding: 10px;
+      background: #fff; }
+  body .jcarousel-skin-tango {
+    margin-bottom: 1em; }
+  body #login_content {
+    background-color: #206499;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#206499), color-stop(99%, #092236));
+    height: 100%;
+    color: white; }
+    body #login_content #floater {
+      float: left;
+      height: 25%;
+      width: 100%;
+      margin-bottom: -50px;
+      margin: 0px auto;
+      margin-top: auto; }
+    body #login_content #login_logo {
+      text-align: center;
+      clear: both;
+      height: 150px;
+      background-image: url("../images/netflics-logo.png");
+      background-position: center;
+      background-size: auto 150px;
+      background-repeat: no-repeat; }
+    body #login_content #login-box {
+      text-align: center;
+      clear: both;
+      width: 220px;
+      min-height: 100px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+      margin: 0px auto;
+      margin-top: auto; }
+  body #footer {
+    clear: both;
+    color: #FFFFFF;
+    width: 100%;
+    height: 3em;
+    bottom: 0;
+    font-size: 12px;
+    text-align: center;
+    background-color: #000;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 10;
+    margin-top: 0.2em; }

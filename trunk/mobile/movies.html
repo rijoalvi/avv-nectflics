@@ -1,0 +1,101 @@
+<!doctype "html">
+<html>
+    <head>
+        <title>Netflics</title>
+  
+        <link rel="stylesheet" type="text/css" href="skins/ie7/skin.css" />
+        <link rel="stylesheet" type="text/css" href="skins/tango/skin.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="main_header">
+                <div id="logo">
+                </div>
+            </div>
+            <div id="content">
+                <div class="contentWrapper">
+                    <div id="mainPage" class="contentBox">
+                        <div id="comedyCarousel">
+                            <p>Comedy</p>
+                                    <ul id="comedyList" class="jcarousel-skin-tango"></ul>
+                        </div>
+
+                        <script id="comedyTemplate" class="carousel" type="text/template">
+                            <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                <li id = <%= movies[i].id %>>
+                                    <%= movies[i].poster_path %>
+                                </li>
+                            <% }; %>
+                        </script>        
+
+
+                        <div id="actionCarousel">
+                             <p>Action</p>
+                                    <ul id="actionList" class="jcarousel-skin-tango"></ul>
+                        </div>
+
+                        <script id="actionTemplate" class="carousel" type="text/template">
+                            <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                <li id = <%= movies[i].id %>>
+                                    <%= movies[i].poster_path %>
+                                </li>
+                            <% }; %>
+                        </script>
+
+
+                        <div id="fictionCarousel">
+                             <p>Fiction</p>
+                                    <ul id="fictionList" class="jcarousel-skin-tango"></ul>
+                        </div>     
+
+                        <script id="fictionTemplate" class="carousel" type="text/template">
+                            <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                <li id = <%= movies[i].id %>>
+                                    <%= movies[i].poster_path %>
+                                </li>
+                            <% }; %>
+                        </script>
+
+                        <div id="westernCarousel">
+                             <p>Western</p>
+                                    <ul id="westernList" class="jcarousel-skin-tango"></ul>
+                        </div>
+
+                        <script id="westernTemplate" class="carousel" type="text/template">
+                            <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                <li id = <%= movies[i].id %>>
+                                    <%= movies[i].poster_path %>
+                                </li>
+                            <% }; %>
+                        </script>
+
+                        <div id="suspenseCarousel">
+                             <p>Suspense</p>
+                                    <ul id="suspenseList" class="jcarousel-skin-tango"></ul>
+                        </div>        
+
+                        <script id="suspenseTemplate" class="carousel" type="text/template">
+                            <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                <li id = <%= movies[i].id %>>
+                                    <%= movies[i].poster_path %>
+                                </li>
+                            <% }; %>
+                        </script>
+                    </div>
+                    <div id="descriptionPage" class="contentBox">
+                        <p>Lalalalala</p>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <p>El uso del servicio de Netflics y de este sitio web constituye la aceptaci&oacute;n de nuestros T&eacute;rminos de uso y nuestra Pol&iacute;tica de privacidad.<br />&reg;2012 Netflics, Inc. Todos los derechos reservados.</p>
+            </div>  
+            <script src="js/lib/jquery.js"></script>
+            <script src="js/lib/underscore-min.js"></script>
+            <script src="js/lib/backbone-min.js"></script>
+            <script src="js/lib/jquery.jcarousel.min.js"></script>
+            <script src="js/general/app.js"></script>
+        </div>    
+    </body>
+</html>
