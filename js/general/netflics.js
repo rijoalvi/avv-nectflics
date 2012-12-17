@@ -3,16 +3,31 @@
 var Netflics = Netflics || {};
 
 Netflics.Movies = function (allMovies) {
-
+    'use strict';
 };
 
 Netflics.Service = function () {
-
+    'use strict';
 };
 
 Netflics.UIManager = function () {
+    'use strict';
+    this.initialize = function () {
+        var cache = {
+            list1: $('#list1')
+        };
+    };
 
+    var listener = new Netflics.Listener(cache);
+    listener.listen();
 };
+
+Netflics.Listener = function (cache) {
+    'use strict';
+    this.listen = function () {
+        cache.list1.jcarousel({wrap: 'circular'});
+    };
+}
 
 (function () {
     'use strict';
@@ -88,5 +103,7 @@ Netflics.UIManager = function () {
     var isMobile = $.browser.mobile;
     if (isMobile) {
         window.location.replace("/mobile/");
+    } else {
+        Netflics.UIManager.initialize();
     }
 }());
