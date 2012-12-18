@@ -10,24 +10,53 @@ Netflics.Service = function () {
     'use strict';
 };
 
-Netflics.UIManager = function () {
-    'use strict';
-    this.initialize = function () {
-        var cache = {
-            list1: $('#list1')
-        };
-    };
-
-    var listener = new Netflics.Listener(cache);
-    listener.listen();
-};
-
 Netflics.Listener = function (cache) {
     'use strict';
     this.listen = function () {
         cache.list1.jcarousel({wrap: 'circular'});
+        cache.el.on('click', 'a', function (e) {
+            e.preventDefault();
+            alert($(this).attr('id'));
+        })
     };
-}
+};
+
+Netflics.UIManager = function () {
+    'use strict';
+    var myArray1 = [];
+    var cache = {
+        list1: $('#list1'),
+        el: $('#list1 li')
+    };
+    this.initialize = function () {
+        var listener = new Netflics.Listener(cache);
+        listener.listen();
+    };
+};
+
+Netflics.getMoviesbyGenre = function (genre) {
+    'use strict';
+    var myArray = [];
+    $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: 'http://api.themoviedb.org/3/genre/' + genre + '/movies?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
+        success: function (data) {
+            //var myList = "";
+            $.each(data.results, function (i, item) {
+                myArray.push(this);
+            });
+        }
+
+    });
+    for (var i=0; i < myArray.length; i++) {
+        //console.log(myArray[i].original_title + "\n");
+        var path = "http://cf2.imgobject.com/t/p/w185" + myArray[i].poster_path;
+        var item = '<li><a href="#" id="' + myArray[i].id + '"><img src="' + path + '" /></a></li>';
+        $('#list1').append(item);
+    }
+};
 
 (function () {
     'use strict';
@@ -104,6 +133,8 @@ Netflics.Listener = function (cache) {
     if (isMobile) {
         window.location.replace("/mobile/");
     } else {
-        Netflics.UIManager.initialize();
+        Netflics.getMoviesbyGenre(28);
+        var myNetflics = new Netflics.UIManager();
+        myNetflics.initialize();
     }
 }());
