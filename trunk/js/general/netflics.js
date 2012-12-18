@@ -2,12 +2,96 @@
 
 var Netflics = Netflics || {};
 
-Netflics.Movies = function (allMovies) {
-    'use strict';
+Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
+    var genre = {
+        name : genreName,
+        id : genreID,
+        movieInfo : []
+    };
+    
+    for (var i = 0; movieResult.results.length >= 0 && i < 19 ; i++) {
+        genre.movieInfo.push({
+            title : movieResult.results[i].title,
+            coverImage : "http://cf2.imgobject.com/t/p/w500/" + movieResult.results[i].backdrop_path,
+            id : movieResult.results[i].id,
+            description: movieDescription[i]
+        });
+    };
 };
 
 Netflics.Service = function () {
-    'use strict';
+    this.getListOfGenre = function () {
+        var listOfAvailableGenres = {};
+        $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: 'http://private-f481-themoviedb.apiary.io/3/genre/list?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
+            success: function(data) {
+                listOfAvailableGenres = data;
+            }, 
+            error: function(e) {
+                console.log(e.message);
+                alert("Error");
+            }
+        });
+        return listOfAvailableGenres;
+    };
+
+    this.getListOfMoviesByGenres = function (genreID) {
+        var listOfMoviesByGenres = {};
+        $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: 'http://private-f481-themoviedb.apiary.io/3/genre/' + genreID + '/movies?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
+            success: function(json) {
+                listOfMoviesByGenres = json;
+            },
+            error: function(e) {
+                console.log(e.message);
+                alert("Error");
+            }
+        });
+        return listOfMoviesByGenres;
+    };
+
+    this.getMovieOverviewById = function (movieId) {
+        var movieOverview = {};
+        $.ajax({
+            async: false,
+            type: 'GET',
+            dataType: 'json',
+            url: 'http://private-f481-themoviedb.apiary.io/3/movie/' + movieId + '?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
+            success: function(json) {
+                movieOverview = json.overview;
+            },
+            error: function(e) {
+                console.log(e.message);
+                alert("Error");
+            }
+        });
+        return movieOverview;
+    };
+};
+
+Netflics.Controller = function () {
+    var moviesArray = [];
+    var movieOverview = [];
+    var movieService = new Netflics.Service();
+    listOfGenres = movieService.getListOfGenre();
+
+    for (var i = 0; listOfGenres.genres.length >= 0  && i < 5; i++) {
+        var genreID = listOfGenres.genres[i].id;
+        var genreName = listOfGenres.genres[i].name;
+        var movieInfo = movieService.getListOfMoviesByGenres(listOfGenres.genres[i].id);
+        for (var u = 0; listOfGenres.genres.length >= 0  && u < 19; u++) {
+            movieOverview[u] = movieService.getMovieOverviewById(movieInfo.results[u].id);
+        };
+        var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
+        moviesArray.push(moviesReal);
+    };
+    console.log(moviesArray);
 };
 
 Netflics.Listener = function (cache) {
@@ -138,3 +222,7 @@ Netflics.getMoviesbyGenre = function (genre) {
         myNetflics.initialize();
     }
 }());
+
+$(document).ready(function() {
+    Netflics.Controller();
+});
