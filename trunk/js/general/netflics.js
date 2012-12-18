@@ -98,10 +98,11 @@ Netflics.Listener = function (cache) {
     'use strict';
     this.listen = function () {
         cache.list1.jcarousel({wrap: 'circular'});
-        cache.el.on('click', 'a', function (e) {
+        cache.list1.on('hover', 'li', function (e) {
             e.preventDefault();
-            alert($(this).attr('id'));
-        })
+            //console.log($(this).attr('id'));
+            $(this).find('#movie-title').text('Prueba');
+        });
     };
 };
 
@@ -109,8 +110,7 @@ Netflics.UIManager = function () {
     'use strict';
     var myArray1 = [];
     var cache = {
-        list1: $('#list1'),
-        el: $('#list1 li')
+        list1: $('#list1')
     };
     this.initialize = function () {
         var listener = new Netflics.Listener(cache);
@@ -137,7 +137,8 @@ Netflics.getMoviesbyGenre = function (genre) {
     for (var i=0; i < myArray.length; i++) {
         //console.log(myArray[i].original_title + "\n");
         var path = "http://cf2.imgobject.com/t/p/w185" + myArray[i].poster_path;
-        var item = '<li><a href="#" id="' + myArray[i].id + '"><img src="' + path + '" /></a></li>';
+        var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
+        var item = '<li id="' + myArray[i].id + '"><a href="#" class="trigger"><img src="' + path + '" /></a>' + body + '</li>';
         $('#list1').append(item);
     }
 };
@@ -151,7 +152,7 @@ Netflics.getMoviesbyGenre = function (genre) {
         xfbml      : true  // parse XFBML
     });
     FB.getLoginStatus(function (response) {
-        var currenURL = window.location;
+        var currentURL = window.location;
         if (response.status === 'connected') {
             console.log(response);
             var uid = response.authResponse.userID;
@@ -164,7 +165,7 @@ Netflics.getMoviesbyGenre = function (genre) {
             if (window.location.href.indexOf("movies-gallery") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currenURL == "http://test3.aceldama-metal.com/" || currenURL == "http://test3.aceldama-metal.com/index.html") { //If the user is in the index
+                if (currentURL == "http://test7.dynamis-soft.com/" || currentURL == "http://test7.dynamis-soft.com/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -181,7 +182,7 @@ Netflics.getMoviesbyGenre = function (genre) {
             if (window.location.href.indexOf("movies-gallery") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currenURL == "http://test3.aceldama-metal.com/" || currenURL == "http://test3.aceldama-metal.com/index.html") { //If the user is in the index
+                if (currentURL == "http://test7.dynamis-soft.com/" || currentURL == "http://test7.dynamis-soft.com/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -211,7 +212,7 @@ Netflics.getMoviesbyGenre = function (genre) {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-(function () {
+$(document).ready(function() {
     'use strict';
     var isMobile = $.browser.mobile;
     if (isMobile) {
@@ -220,9 +221,6 @@ Netflics.getMoviesbyGenre = function (genre) {
         Netflics.getMoviesbyGenre(28);
         var myNetflics = new Netflics.UIManager();
         myNetflics.initialize();
+        Netflics.Controller();
     }
-}());
-
-$(document).ready(function() {
-    Netflics.Controller();
 });

@@ -32,6 +32,46 @@ body {
 			background: transparent url("../../images/nf-logo.png");
 			margin: 5px;
 		}
+
+		#search-box {
+			float: right;
+			background-color: #ffffff;
+			margin-top: 35px;
+			margin-right: 25px;
+			border-top: 1px solid #5C5C5C;
+			border-left: 1px solid #5C5C5C;
+			#global-search {
+
+				#searchField {
+					display: inline-block;
+					border: none;
+					font-size: 11px;
+					margin: 0;
+					outline: none;
+					padding: 2px;
+					vertical-align: middle;
+					background-color: transparent;
+					vertical-align: middle;
+					width: 222px;
+					height: 20px;
+					line-height: 20px;
+					color: #666;
+				}
+
+				button {
+					background: transparent url(http://cdn-0.nflximg.com/en_us/ffe/headers/header_icons_sprite.png) 2px -30px no-repeat;
+					height: 20px;
+					overflow: hidden;
+					padding: 0;
+					text-indent: -9999px;
+					width: 16px;
+					border: none;
+					cursor: pointer;
+				}
+
+			}
+
+		}
 	}
 
 	article {
@@ -54,105 +94,12 @@ body {
 				padding: 10px;
 			}
 
-
-			.list_carousel {
-
-				width: 900px;
-				background-color: transparent;
-			    display: block;
-			    margin: 0;
-			    overflow: hidden;
-			    position: relative;
-				font-size: 20px;
-				float: left;
-				z-index: 0!important;
-
-				a {
-					color: $font-color;
-					text-decoration: none;
-				}
-				ul {
-					margin: 0;
-					padding: 0;
-					list-style: none;
-					display: block;
-
-					li {
-						width: 100px;
-						height: 140px;
-						font-size: 40px;
-						padding: 6px 0 0;
-						margin: 6px;
-						border: 5px solid #999;
-						display: inline-block;
-						float: left;
-						vertical-align: bottom;
-						color: #999;
-						text-align: center;
-						background-color: #eee;
-
-						img {
-							width: 75px;
-							height: 75px;
-						}
-					}
-				}
-
-				.caroufredsel_wrapper {
-					z-index: -1!important;
-					margin-left: 55px!important;
-				}
-				.responsive {
-					width: auto;
-					margin-left: 0;
-				}
-
-				.clearfix {
-					float: none;
-					clear: both;
-				}
-
-				.arrow {
-					background-color: rgba(0, 0, 0, 0.8);
-				    border-radius: 10px;
-				    height: 36px;
-				    margin: -162px 0 0 61px!important;
-				    padding: 60px 15px;
-				    z-index: 2!important;
-				    font-size: 28px;
-				    cursor: pointer;
-				}
-				.prev {
-					float: left;
-					margin-left: 10px;
-				}
-
-				.next {
-					float: right;
-					margin-right: 10px;
-				}
-
-				.pager {
-					display: block;
-					text-align: center;
-					
-					a {
-						color: #000000;
-						margin: 0 5px;
-
-						.selected {
-							text-decoration: underline!important;
-						}
-					}
-				}
-			}
-
 			.jcarousel-skin-tango .jcarousel-container {
 			    -moz-border-radius: 10px;
 			    -webkit-border-radius: 10px;
 			   border-radius: 10px;
-			    background: rgba(0, 0, 0, 0.8);
-			    border: 1px solid #346F97;
+			   background: rgba(0, 0, 0, 0.8);
+			   border: 1px solid #ccc;
 			}
 
 			.jcarousel-skin-tango .jcarousel-direction-rtl {
@@ -192,6 +139,21 @@ body {
 				    width: 166px;
 				    height: 236px;
 			    }
+    			.popup {
+    				width: 250px;
+    				padding: 10px;
+    				margin-right: 20px;
+    				background: rgba(0, 0, 0, 0.8);
+			   		border: 1px solid #ccc;
+			   		border-radius: 10px;
+				    position: relative;
+				    display: none;
+				    clear: both;
+				    z-index: 9999;
+				    #title {
+				    	text-align: center;
+				    }
+				}
 			}
 
 			.jcarousel-skin-tango .jcarousel-item-horizontal {
@@ -357,10 +319,12 @@ body {
 				text-align: center;
 				border-radius: 10px;
 			}
+
 		}	
+
+
 	}
 	
-
 	footer {
 		width: 98%;
 		height: auto;

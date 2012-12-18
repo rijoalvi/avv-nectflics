@@ -10,12 +10,18 @@
 <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript" src="js/general/jQuery.browser.mobile.js"></script>
 <script type="text/javascript" src="js/components/jquery.jcarousel.js"></script>
+<script type="text/javascript" src="js/components/coda-popup.js"></script>
 <link type="text/css" href="css/general/styles.css" rel="stylesheet"/>
 </head>
 <body>
 	<header>
 		<div id="logo"></div>
-		<div id="search-box"></div>
+		<div id="search-box">
+			<form id="global-search" name="search" action="search.html" method="GET">
+				<input type="text" tabindex="1" id="searchField" name="v1" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+				<button type="submit" name="search_submit" tabindex="2">Search</button>
+			</form>
+		</div>
 	</header>
 	<article>
 		<div id="wrapper">
@@ -32,7 +38,9 @@
 	        <!--<div class="slogan">
 	        	<p>World Biggest Movies Collection</p>
 	        </div>-->
-    	</div>
+	        <div class="bubbleInfo">
+			</div>
+    	</div>	
 	</article>
     <footer>
     	<p>El uso del servicio de Netflics y de este sitio web constituye la aceptación de nuestros Términos de uso y nuestra Política de privacidad.<br />
