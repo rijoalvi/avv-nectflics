@@ -10,6 +10,9 @@
     <body>
         <div id="wrapper">
             <div id="main_header">
+                <div id="backGenresArrow" class="hidden">
+                    <p>Back</p>
+                </div>
                 <div id="logo">
                 </div>
             </div>
@@ -84,13 +87,37 @@
                         </script>
                     </div>
                     <div id="descriptionPage" class="contentBox">
-                        <p>Lalalalala</p>
+                        <div id="movieDetails">
+                            <p></p>
+                        </div>
+
+                        <script id="movieDetailsTemplate" class="details" type="text/template">
+                                    <h2><%= movie.original_title %></h2>
+                                    <%= movie.poster_path %>
+                                    <h4>Release Date: </h4><p><%= movie.release_date %>
+                                    <h4>Overview: </h4><%= movie.overview %>
+            
+                        </script>
+                    </div>
+                    <div id="searchPage" class="contentBox">
+                        <div id="movieDetails">
+                            <p></p>
+                        </div>
+
+                        <script id="movieDetailsTemplate" class="details" type="text/template">
+                                    <h2><%= movie.original_title %></h2>
+                                    <%= movie.poster_path %>
+                                    <h4>Release Date: </h4><p><%= movie.release_date %>
+                                    <h4>Overview: </h4><%= movie.overview %>
+            
+                        </script>
                     </div>
                 </div>
             </div>
             <div id="footer">
                 <p>El uso del servicio de Netflics y de este sitio web constituye la aceptaci&oacute;n de nuestros T&eacute;rminos de uso y nuestra Pol&iacute;tica de privacidad.<br />&reg;2012 Netflics, Inc. Todos los derechos reservados.</p>
-            </div>  
+            </div>
+            <script src="http://connect.facebook.net/en_US/all.js"></script>
             <script src="js/lib/jquery.js"></script>
             <script src="js/lib/underscore-min.js"></script>
             <script src="js/lib/backbone-min.js"></script>
