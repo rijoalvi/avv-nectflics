@@ -112,10 +112,10 @@ body {
           border-radius: 10px;
           position: relative;
           display: none;
-          clear: both;
-          z-index: 9999; }
-          body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup #title {
-            text-align: center; }
+          clear: both; }
+          body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup #movie-title {
+            text-align: center;
+            font-weight: bold; }
       body article #wrapper .jcarousel-skin-tango .jcarousel-item-horizontal {
         margin-left: 0;
         margin-right: 10px; }
