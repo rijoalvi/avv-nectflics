@@ -212,7 +212,7 @@ Netflics.getMoviesbyGenre = function (genre) {
     ref.parentNode.insertBefore(js, ref);
 }(document));
 
-$(document).ready(function() {
+(function () {
     'use strict';
     var isMobile = $.browser.mobile;
     if (isMobile) {
@@ -221,6 +221,9 @@ $(document).ready(function() {
         Netflics.getMoviesbyGenre(28);
         var myNetflics = new Netflics.UIManager();
         myNetflics.initialize();
-        Netflics.Controller();
     }
-});
+}());
+
+/*$(document).ready(function() {
+    Netflics.Controller();
+});*/
