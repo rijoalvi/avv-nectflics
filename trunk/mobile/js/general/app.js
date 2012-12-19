@@ -101,6 +101,7 @@ var ComedyMoviesView = Backbone.View.extend({
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
+            $("#backGenresArrow").show();
             $('html, body').animate({scrollTop: 0}, 600);
         },
         listLoad: function () {
@@ -137,6 +138,7 @@ var ActionMoviesView = Backbone.View.extend({
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
+            $("#backGenresArrow").show();
             $('html, body').animate({scrollTop: 0}, 600);
         },
         doNothing: function (e) {
@@ -174,6 +176,7 @@ var FictionMoviesView = Backbone.View.extend({
         },
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
+            $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
         },
@@ -209,6 +212,7 @@ var WesternMoviesView = Backbone.View.extend({
         },
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
+            $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
         },
@@ -244,6 +248,7 @@ var SuspenseMoviesView = Backbone.View.extend({
         },
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
+            $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
         },
@@ -276,8 +281,8 @@ var MovieDetailsView = Backbone.View.extend({
 
     },
     viewLoad: function (key) {
-        $("#backGenresArrow").show();
         if (key) {
+            $("#searchImage").hide();
             var movie = new DetailsMovie({id:key});
             var $el = this.$el;
             var template = this.tpl;
@@ -311,6 +316,12 @@ $(function () {
     $("#backGenresArrow").on("click touchend", function(event){
         $(".contentWrapper").animate({"left": -($('#mainPage').position().left)}, 600);
         $("#backGenresArrow").hide();
+        $("#searchImage").show();
+    });
+    $("#searchImage").on("click touchend", function(event){
+        $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 600);
+        $("#backGenresArrow").hide();
+        $("#searchImage").show();
     });
     new ComedyMoviesView().render();
     new ActionMoviesView().render();

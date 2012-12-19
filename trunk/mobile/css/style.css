@@ -18,7 +18,7 @@ body {
       margin-top: 13px;
       font-size: 25px; }
     body #main_header #logo {
-      height: 100px;
+      height: 80px;
       background-image: url("../images/netflics-logo.png");
       background-size: auto 100%;
       background-repeat: no-repeat;
@@ -68,6 +68,13 @@ body {
       border-left: 1.5px solid rgba(255, 255, 255, 0.3);
       box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2) inset, -1px 1px 1px rgba(0, 0, 0, 0.5) inset;
       -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(black), color-stop(0.33, black), color-stop(0.5, transparent), to(transparent)); }
+    body #main_header #searchImage {
+      height: 64px;
+      width: 64px;
+      background-image: url("../../images/search.png");
+      position: absolute;
+      right: 8px;
+      top: 8px; }
   body #content {
     overflow: hidden;
     -webkit-box-shadow: 0 0 2px 2px #ccc;
