@@ -8,14 +8,87 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         id : genreID,
         movieInfo : []
     };
-    
-    for (var i = 0; movieResult.results.length >= 0 && i < 19 ; i++) {
+
+    for (var i = 0; movieResult.results.length >= 0 && i < 19; i++) {
         genre.movieInfo.push({
             title : movieResult.results[i].title,
-            coverImage : "http://cf2.imgobject.com/t/p/w500/" + movieResult.results[i].backdrop_path,
+            coverImage : "http://cf2.imgobject.com/t/p/w185/" + movieResult.results[i].backdrop_path,
             id : movieResult.results[i].id,
             description: movieDescription[i]
         });
+    };
+    
+    this.getGenresName = function () {
+        return genre.name;
+    };
+
+    this.getGenreId = function () {
+        return genre.id;
+    };
+
+    this.getMoviesArray =  function () {
+        return genre.movieInfo;
+    };
+
+    this.getMovieInfoByMovieNameOrId =  function (movieFlag) {
+        var specificMovieInfo = {};
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+            console.log(genre.movieInfo[i].title);
+             if (genre.movieInfo[i].title == movieFlag || genre.movieInfo[i].id == movieFlag) {
+                specificMovieInfo = genre.movieInfo[i];
+                i = 19;             
+            };
+        };
+        return specificMovieInfo;
+    };
+
+    this.getMovieNamesArray = function () {
+        var moviesNames = [];
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+            moviesNames.push(genre.movieInfo[i].title);
+        };
+        return moviesNames;
+    };
+
+    this.getMovieIdsArray = function () {
+        var moviesIds = [];
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+            moviesIds.push(genre.movieInfo[i].id);
+        };
+        return moviesIds;
+    };
+
+    this.getMovieNameByMovieId = function (movieId) {
+        var movieName = "";
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+             if (genre.movieInfo[i].id == movieId) {
+                movieName = genre.movieInfo[i].title
+                i = 19;
+             };
+        };
+        return movieName;
+    };
+
+    this.getMovieIdByMovieName = function (movieName) {
+        var movieId = "";
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+             if (genre.movieInfo[i].title == movieName) {
+                movieId = genre.movieInfo[i].id;
+                i = 19;             
+            };
+        };
+        return movieId;
+    };
+
+    this.getSpecificMovieDataByMovieNameOrId = function (typeOfData, movieFlag) {
+        var movieData = "";
+        for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
+             if (genre.movieInfo[i].title == movieFlag || genre.movieInfo[i].id == movieFlag) {
+                movieData = genre.movieInfo[i][typeOfData];
+                i = 19;             
+            };
+        };
+        return movieData;
     };
 };
 
@@ -79,7 +152,7 @@ Netflics.Controller = function () {
     var moviesArray = [];
     var movieOverview = [];
     var movieService = new Netflics.Service();
-    listOfGenres = movieService.getListOfGenre();
+    var listOfGenres = movieService.getListOfGenre();
 
     for (var i = 0; listOfGenres.genres.length >= 0  && i < 5; i++) {
         var genreID = listOfGenres.genres[i].id;
@@ -91,10 +164,11 @@ Netflics.Controller = function () {
         var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
         moviesArray.push(moviesReal);
     };
-    console.log(moviesArray);
+    var example = moviesArray[0].getSpecificMovieDataByMovieNameOrId("coverImage", "Star Wars: Episode V - The Empire Strikes Back");
+    console.log(example);
 };
 
-Netflics.Listener = function (cache) {
+/*Netflics.Listener = function (cache) {
     'use strict';
     this.listen = function () {
         cache.list1.jcarousel({wrap: 'circular'});
@@ -222,7 +296,7 @@ Netflics.getMoviesbyGenre = function (genre) {
         var myNetflics = new Netflics.UIManager();
         myNetflics.initialize();
     }
-}());
+}());*/
 
 /*$(document).ready(function() {
     Netflics.Controller();
