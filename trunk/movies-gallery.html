@@ -11,12 +11,28 @@
 <script type="text/javascript" src="js/general/jQuery.browser.mobile.js"></script>
 <script type="text/javascript" src="js/components/jquery.jcarousel.js"></script>
 <script type="text/javascript" src="js/components/coda-popup.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    'use strict';
+    var isMobile = $.browser.mobile;
+    if (isMobile) {
+        window.location.replace("/mobile/");
+    } else {
+        Netflics.InstanciateFacebook();
+        Netflics.InitFacebook();
+        Netflics.Login();
+        Netflics.Controller();
+    }
+    
+});
+</script>
 <link type="text/css" href="css/general/styles.css" rel="stylesheet"/>
 </head>
 <body>
 	<header>
 		<div id="logo"></div>
 		<div id="search-box">
+			<p id="userMessage"></p>
 			<form id="global-search" name="search" action="search.html" method="GET">
 				<input type="text" tabindex="1" id="searchField" name="v1" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
 				<button type="submit" name="search_submit" tabindex="2">Search</button>
@@ -28,11 +44,15 @@
         <h1>Movies Gallery</h1>
 			<div>
 			  <ul id="list1" class="jcarousel-skin-tango"></ul>
+			  <ul id="list2" class="jcarousel-skin-tango"></ul>
+			  <ul id="list3" class="jcarousel-skin-tango"></ul>
+			  <ul id="list4" class="jcarousel-skin-tango"></ul>
+			  <ul id="list5" class="jcarousel-skin-tango"></ul>
 			</div>
 
 
 			<br />
-	        <p id="userMessage"></p>
+	        
 	        <div id="fb-root"></div>
 	        <div class="content-collection"></div>
 	        <!--<div class="slogan">
