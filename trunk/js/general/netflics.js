@@ -2,6 +2,13 @@
 
 var Netflics = Netflics || {};
 
+/*
+* @description: Object that contains the Movies struccture
+* @param genreID: Movies Genre id
+* @param genreName: Movies Genre name
+* @param movieResult: Array of Movies for a specific Genre
+* @param movieDescription: Array of descriptions for each movie
+*/
 Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
     var genre = {
         name : genreName,
@@ -18,18 +25,31 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         });
     };
     
+    /*
+    * @description: Method that return the genre name
+    */
     this.getGenresName = function () {
         return genre.name;
     };
 
+    /*
+    * @description: Method that return the genre id
+    */
     this.getGenreId = function () {
         return genre.id;
     };
 
+    /*
+    * @description: Method that return an array of moviesInfo and their attributes 
+    */
     this.getMoviesArray =  function () {
         return genre.movieInfo;
     };
 
+    /*
+    * @description: Method that return an specific moviesInfo
+    * @param movieFlag: Can be a movie ID(Number) or a movie Name(String)
+    */
     this.getMovieInfoByMovieNameOrId =  function (movieFlag) {
         var specificMovieInfo = {};
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -42,6 +62,9 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         return specificMovieInfo;
     };
 
+    /*
+    * @description: Method that return an array of movies names
+    */
     this.getMovieNamesArray = function () {
         var moviesNames = [];
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -50,6 +73,9 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         return moviesNames;
     };
 
+    /*
+    * @description: Method that return an array of movies ids
+    */
     this.getMovieIdsArray = function () {
         var moviesIds = [];
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -58,6 +84,10 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         return moviesIds;
     };
 
+    /*
+    * @description: Method that return an specific movie name
+    * @param movieId: The id(Number) of a specific movie
+    */
     this.getMovieNameByMovieId = function (movieId) {
         var movieName = "";
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -69,6 +99,10 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         return movieName;
     };
 
+    /*
+    * @description: Method that return an specific movie id
+    * @param movieName: The name(String) of a specific movie
+    */
     this.getMovieIdByMovieName = function (movieName) {
         var movieId = "";
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -80,6 +114,11 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
         return movieId;
     };
 
+    /*
+    * @description: Method that return an specific attribute data from an specific movie
+    * @param typeOfData: The attribute name(String)
+    * @param movieFlag: Can be a movie ID(Number) or a movie Name(String)
+    */
     this.getSpecificMovieDataByMovieNameOrId = function (typeOfData, movieFlag) {
         var movieData = "";
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
@@ -92,7 +131,13 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
     };
 };
 
+/*
+* @description: Object with a serius of ajax async false request for get the necessary movies datas form the api
+*/
 Netflics.Service = function () {
+    /*
+    * @description: Method that return a json of genres names and theirs id
+    */
     this.getListOfGenre = function () {
         var listOfAvailableGenres = {};
         $.ajax({
@@ -111,6 +156,10 @@ Netflics.Service = function () {
         return listOfAvailableGenres;
     };
 
+    /*
+    * @description: Method that return a json of movies names and theirs id and some other data
+    * @param genreID: The id(Number) of a specific genre
+    */
     this.getListOfMoviesByGenres = function (genreID) {
         var listOfMoviesByGenres = {};
         $.ajax({
@@ -129,6 +178,10 @@ Netflics.Service = function () {
         return listOfMoviesByGenres;
     };
 
+    /*
+    * @description: Method that return a specific movie overview
+    * @param movieId: The id(Number) of a specific movie
+    */
     this.getMovieOverviewById = function (movieId) {
         var movieOverview = {};
         $.ajax({
@@ -148,6 +201,9 @@ Netflics.Service = function () {
     };
 };
 
+/*
+* @description: Object in charge of controll the interaction between Service, Movies, and the UIManager
+*/
 Netflics.Controller = function () {
     var moviesArray = [];
     var movieOverview = [];
@@ -164,8 +220,6 @@ Netflics.Controller = function () {
         var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
         moviesArray.push(moviesReal);
     };
-    var example = moviesArray[0].getSpecificMovieDataByMovieNameOrId("coverImage", "Star Wars: Episode V - The Empire Strikes Back");
-    console.log(example);
 };
 
 /*Netflics.Listener = function (cache) {
@@ -298,6 +352,6 @@ Netflics.getMoviesbyGenre = function (genre) {
     }
 }());*/
 
-/*$(document).ready(function() {
+$(document).ready(function() {
     Netflics.Controller();
-});*/
+});
