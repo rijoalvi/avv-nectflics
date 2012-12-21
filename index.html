@@ -10,6 +10,19 @@
 <script type="text/javascript" src="js/components/jquery.jcarousel.js"></script>
 <script type="text/javascript" src="js/general/jQuery.browser.mobile.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    'use strict';
+    var isMobile = $.browser.mobile;
+    if (isMobile) {
+        window.location.replace("/mobile/");
+    } else {
+        Netflics.InstanciateFacebook();
+        Netflics.InitFacebook();
+        Netflics.Login();
+    }
+});
+</script>
 <link type="text/css" href="css/general/styles.css" rel="stylesheet"/>
 </head>
 <body>

@@ -10,6 +10,7 @@ var Netflics = Netflics || {};
 * @param movieDescription: Array of descriptions for each movie
 */
 Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
+    'use strict';
     var genre = {
         name : genreName,
         id : genreID,
@@ -53,7 +54,6 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
     this.getMovieInfoByMovieNameOrId =  function (movieFlag) {
         var specificMovieInfo = {};
         for (var i = 0; genre.movieInfo.length >= 0  && i < 19; i++) {
-            console.log(genre.movieInfo[i].title);
              if (genre.movieInfo[i].title == movieFlag || genre.movieInfo[i].id == movieFlag) {
                 specificMovieInfo = genre.movieInfo[i];
                 i = 19;             
@@ -214,31 +214,63 @@ Netflics.Controller = function () {
         var genreID = listOfGenres.genres[i].id;
         var genreName = listOfGenres.genres[i].name;
         var movieInfo = movieService.getListOfMoviesByGenres(listOfGenres.genres[i].id);
-        for (var u = 0; listOfGenres.genres.length >= 0  && u < 19; u++) {
-            movieOverview[u] = movieService.getMovieOverviewById(movieInfo.results[u].id);
+        for (var j = 0; listOfGenres.genres.length >= 0  && j < 19; j++) {
+            movieOverview[j] = movieService.getMovieOverviewById(movieInfo.results[j].id);
         };
         var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
         moviesArray.push(moviesReal);
     };
+
+    Netflics.ShowMoviesLists(moviesArray);
 };
 
-/*Netflics.Listener = function (cache) {
+/*
+* @description: displays the movies galleries in the front end
+*/
+Netflics.ShowMoviesLists = function (moviesArray) {
+    'use strict';
+    for (var i = 0; i < moviesArray.length; i++) {
+        console.log(moviesArray[i]);
+
+    };
+    /*for (var i=0; i < myArray.length; i++) {
+        //console.log(myArray[i].original_title + "\n");
+        var path = "http://cf2.imgobject.com/t/p/w185" + myArray[i].poster_path;
+        var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
+        var item = '<li id="' + myArray[i].id + '"><a href="#" class="trigger"><img src="' + path + '" /></a>' + body + '</li>';
+        $('#list1').append(item);
+    }*/
+
+};
+
+/*
+* @description: Add listeners to the DOM catched elements
+*/
+Netflics.Listener = function (cache) {
     'use strict';
     this.listen = function () {
-        cache.list1.jcarousel({wrap: 'circular'});
-        cache.list1.on('hover', 'li', function (e) {
-            e.preventDefault();
-            //console.log($(this).attr('id'));
-            $(this).find('#movie-title').text('Prueba');
-        });
+        for (var i = 0 ; i > cache.length; i++) {
+            cache.cache[i].jcarousel({wrap: 'circular'});
+            cache.cache[i].on('hover', 'li', function (e) {
+                e.preventDefault();
+                //console.log($(this).attr('id'));
+                $(this).find('p.movie-title').text('Prueba');
+            });
+        };
     };
 };
 
+/*
+* @description: Creates a cache of the DOM elements to manage quickly the user interface.
+*/
 Netflics.UIManager = function () {
     'use strict';
-    var myArray1 = [];
     var cache = {
-        list1: $('#list1')
+        list1: $('#list1'),
+        list2: $('#list2'),
+        list3: $('#list3'),
+        list4: $('#list4'),
+        list5: $('#list5')
     };
     this.initialize = function () {
         var listener = new Netflics.Listener(cache);
@@ -246,32 +278,26 @@ Netflics.UIManager = function () {
     };
 };
 
-Netflics.getMoviesbyGenre = function (genre) {
+/*
+* @description: Instanciates the Facebook API in the local website
+*/
+Netflics.InstanciateFacebook = function (d) {
     'use strict';
-    var myArray = [];
-    $.ajax({
-        async: false,
-        type: 'GET',
-        dataType: 'json',
-        url: 'http://api.themoviedb.org/3/genre/' + genre + '/movies?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
-        success: function (data) {
-            //var myList = "";
-            $.each(data.results, function (i, item) {
-                myArray.push(this);
-            });
-        }
-
-    });
-    for (var i=0; i < myArray.length; i++) {
-        //console.log(myArray[i].original_title + "\n");
-        var path = "http://cf2.imgobject.com/t/p/w185" + myArray[i].poster_path;
-        var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
-        var item = '<li id="' + myArray[i].id + '"><a href="#" class="trigger"><img src="' + path + '" /></a>' + body + '</li>';
-        $('#list1').append(item);
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {
+        return;
     }
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = "http://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
 };
 
-(function () {
+/*
+* @description: Inits the FB object to use locally the Facebook API
+*/
+Netflics.InitFacebook = function () {
     'use strict';
     FB.init({
         appId      : '448050108575505', // App ID
@@ -279,10 +305,16 @@ Netflics.getMoviesbyGenre = function (genre) {
         cookie     : true, // enable cookies to allow the server to access the session
         xfbml      : true  // parse XFBML
     });
+};
+
+/*
+* @description: This moethod invoques the Facebook login status to determine if the user is logged into Facebook or not
+*/
+Netflics.Login = function () {
+    'use strict';
     FB.getLoginStatus(function (response) {
         var currentURL = window.location;
         if (response.status === 'connected') {
-            console.log(response);
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             console.log('This user is currently logged into Facebook.');
@@ -325,9 +357,10 @@ Netflics.getMoviesbyGenre = function (genre) {
             }
         }
     });
-})();
+};
 
-(function (d) {
+
+/*(function (d) {
     'use strict';
     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
     if (d.getElementById(id)) {
@@ -338,20 +371,4 @@ Netflics.getMoviesbyGenre = function (genre) {
     js.async = true;
     js.src = "http://connect.facebook.net/en_US/all.js";
     ref.parentNode.insertBefore(js, ref);
-}(document));
-
-(function () {
-    'use strict';
-    var isMobile = $.browser.mobile;
-    if (isMobile) {
-        window.location.replace("/mobile/");
-    } else {
-        Netflics.getMoviesbyGenre(28);
-        var myNetflics = new Netflics.UIManager();
-        myNetflics.initialize();
-    }
-}());*/
-
-$(document).ready(function() {
-    Netflics.Controller();
-});
+}(document));*/
