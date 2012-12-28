@@ -60,6 +60,34 @@ var DetailsMovie = Backbone.Model.extend({
     });
 
 /*
+ * Collection of movies by search criteria (person/title)
+ * It's in charge of the search movies WS Call
+ *
+ */
+var MoviesBySearch = Backbone.Collection.extend({
+        model: CarouselMovie,
+        type: "movie",   //movie or person
+        query: "28",
+        url: function () {
+            return "http://api.themoviedb.org/3/search/"+this.type+"?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0&query="+this.query;
+        },
+        parse: function (response) {
+            return response.results;
+        },
+        initialize: function () {
+
+        },
+        setCriteria: function (criteria, q) {
+            if (criteria) {
+                this.type = criteria;
+            }
+            if (q) {
+                this.query = q;
+            }
+        }
+    });
+
+ /*
  * Collection of movies by genere
  * It's in charge of the WS Call for movies by genere
  *
@@ -300,6 +328,60 @@ var MovieDetailsView = Backbone.View.extend({
     }
 });
 
+var SearchMoviesView = Backbone.View.extend({
+        el: "#searchResults",
+        tpl: _.template($("#searchTemplate").html()),
+        events: {
+            "touchend #searchButton": "listLoad",
+            "touchend #searchAgainButton": "resetSearch",
+            "touchend #searchList li": "loadMovie"
+        },
+        render: function () {
+
+        },
+        loadMovie: function (e) {
+            detailsView.viewLoad(e.currentTarget.id);
+            $("#backSearchArrow").show();
+            $("#backGenresArrow").hide();
+            $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
+            $('html, body').animate({scrollTop: 0}, 600);
+        },
+        listLoad: function () {
+            this.close();
+            var movies = new MoviesBySearch();
+            var $el = this.$el;
+            var template = this.tpl;
+            movies.setCriteria($("#searchType").val(), $("#searchField").val());
+            movies.fetch({
+                success: function (collection, response, options) {
+                    $el.find('ul').fadeOut(400, function () {
+                        $(this).html(template({movies: collection.toJSON()})).fadeIn(400);
+                        if (collection.size() > 0) {
+                            $("#searchList").jcarousel();
+                        }
+                    });
+                },
+                error: function (collection, xhr, options) {
+                    console.log("Error: ", xhr);
+                }
+            });
+            $("#searchAgainButton").show();
+        },
+        resetSearch: function(){
+            this.remove();
+            $("#searchAgainButton").hide();
+            $("#searchField").val("");
+        },
+        close: function(){
+            this.remove();
+            $("#searchAgainButton").hide();
+        },
+        remove: function(){
+            this.$('.jcarousel-skin-tango').remove().end().append('<ul id="searchList" class="jcarousel-skin-tango"></ul>');
+        }
+    });
+
+
 var Router = Backbone.Router.extend({
         routes: {
             "listLoad/:query": "listLoad"  // #listLoad/kiwis
@@ -314,20 +396,28 @@ var detailsView = new MovieDetailsView();
 $(function () {
 
     $("#backGenresArrow").on("click touchend", function(event){
-        $(".contentWrapper").animate({"left": -($('#mainPage').position().left)}, 600);
+        $(".contentWrapper").animate({"left": -($('#mainPage').position().left)}, 300);
         $("#backGenresArrow").hide();
         $("#searchImage").show();
     });
     $("#searchImage").on("click touchend", function(event){
-        $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 600);
+        $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 300);
         $("#backGenresArrow").hide();
-        $("#searchImage").show();
+        $("#searchImage").hide();
+        $("#backGenresArrow").show();
+    });
+    $("#backSearchArrow").on("click touchend", function(event){
+        $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 300);
+        $("#backSearchArrow").hide();
+        $("#backGenresArrow").show();
+
     });
     new ComedyMoviesView().render();
     new ActionMoviesView().render();
     new SuspenseMoviesView().render();
     new FictionMoviesView().render();
     new WesternMoviesView().render();
+    new SearchMoviesView().render();
     new Router();
     Backbone.history.start();
 });
