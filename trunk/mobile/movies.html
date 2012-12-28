@@ -1,6 +1,6 @@
 <!doctype "html">
 <html>
-    <head>
+    <head> 
         <title>Netflics</title>
   
         <link rel="stylesheet" type="text/css" href="skins/ie7/skin.css" />
@@ -11,11 +11,14 @@
         <div id="wrapper">
             <div id="main_header">
                 <div id="backGenresArrow" class="hidden">
-                    <p>Back</p>
+                    <p>Home</p>
                 </div>
                 <div id="logo">
                 </div>
                 <div id="searchImage" class="visible">
+                </div>
+                <div id="backSearchArrow" class="hidden">
+                    <p>Search</p>
                 </div>
             </div>
             <div id="content">
@@ -88,6 +91,7 @@
                             <% }; %>
                         </script>
                     </div>
+
                     <div id="descriptionPage" class="contentBox">
                         <div id="movieDetails">
                             <p></p>
@@ -96,24 +100,38 @@
                         <script id="movieDetailsTemplate" class="details" type="text/template">
                                     <h2><%= movie.original_title %></h2>
                                     <%= movie.poster_path %>
-                                    <h4>Release Date: </h4><p><%= movie.release_date %>
+                                    <h4>Release Date: </h4><%= movie.release_date %>
                                     <h4>Overview: </h4><%= movie.overview %>
             
                         </script>
                     </div>
+
                     <div id="searchPage" class="contentBox">
-                        <div id="movieDetails">
-                            <input type=search id="searchField">
-                            <p></p>
+                        <div id="searchResults">
+                            <p>Search by: </p>
+                            <select id="searchType">
+                                <option value="movie">Movie</option>
+                                <option value="person">Person</option>
+                            </select>
+                            <input type=search id="searchField" name="s">
+                            <button id="searchButton">Go</button>
+                            <ul id="searchList" class="jcarousel-skin-tango"></ul>
+                            <button id="searchAgainButton" class="hidden">Search Again</button>
                         </div>
 
-                        <script id="movieDetailsTemplate" class="details" type="text/template">
-                                    <h2><%= movie.original_title %></h2>
-                                    <%= movie.poster_path %>
-                                    <h4>Release Date: </h4><p><%= movie.release_date %>
-                                    <h4>Overview: </h4><%= movie.overview %>
-            
+                        <script id="searchTemplate" class="carousel" type="text/template">
+                            <% if (movies.length==0){ %>
+                                <p>Sorry, there are no results for this query</p>
+                            <% } %>
+                            <% if (movies.length>0){ %>
+                                <% for (var i = movies.length - 1; i >= 0; i--) { %>
+                                    <li id = <%= movies[i].id %>>
+                                        <%= movies[i].poster_path %>
+                                    </li>
+                                <% } %>
+                            <% };%>
                         </script>
+
                     </div>
                 </div>
             </div>
