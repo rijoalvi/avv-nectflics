@@ -10,6 +10,9 @@
     <body>
         <div id="wrapper">
             <div id="main_header">
+                <div id="backDetailsArrow" class="hidden">
+                    <p>Back</p>
+                </div>
                 <div id="backGenresArrow" class="hidden">
                     <p>Home</p>
                 </div>
@@ -102,8 +105,15 @@
                                     <%= movie.poster_path %>
                                     <h4>Release Date: </h4><%= movie.release_date %>
                                     <h4>Overview: </h4><%= movie.overview %>
+                                    <button id="trailerButton">View Trailer</button>
             
                         </script>
+                    </div>
+
+                    <div id="trailerPage" class="contentBox">
+                        <div id="trailerImage" class="hidden">
+                            <img src="images/coming_soon.gif">
+                        </div>
                     </div>
 
                     <div id="searchPage" class="contentBox">
