@@ -79,7 +79,7 @@ var MoviesBySearch = Backbone.Collection.extend({
         },
         setCriteria: function (criteria, q) {
             if (criteria) {
-                this.type = criteria;
+                //this.type = criteria;
             }
             if (q) {
                 this.query = q;
@@ -112,6 +112,9 @@ var MoviesByGenre = Backbone.Collection.extend({
 /*
  * Views for each genere. 
  * Different from the specific model for movie details since they use different WS
+ * Functions: 
+ * loadMovie: loads the selected movie information in a detailed view
+ * listLoad: loads the movie posters for the specific genere
  *
  */
 var ComedyMoviesView = Backbone.View.extend({
@@ -133,10 +136,10 @@ var ComedyMoviesView = Backbone.View.extend({
             $('html, body').animate({scrollTop: 0}, 600);
         },
         listLoad: function () {
-            var movies = new MoviesByGenre(35);
+            var movies = new MoviesByGenre(35); //loads a collection of comedy movies. number 35 refers to the code on tmdb for comedy.
             var $el = this.$el;
             var template = this.tpl;
-            movies.fetch({
+            movies.fetch({ // calls the ws and display the posters on the screen.
                 success: function (collection, response, options) {
                     $el.find('ul').fadeOut(400, function () {
                         $(this).html(template({movies: collection.toJSON()})).fadeIn(400);
@@ -173,7 +176,7 @@ var ActionMoviesView = Backbone.View.extend({
             //do nothing
         },
         listLoad: function () {
-            var movies = new MoviesByGenre(28);
+            var movies = new MoviesByGenre(28); //loads a collection of action movies. number 28 refers to the code on tmdb for action.
             var $el = this.$el;
             var template = this.tpl;
             movies.fetch({
@@ -209,7 +212,7 @@ var FictionMoviesView = Backbone.View.extend({
             $('html, body').animate({scrollTop: 0}, 600);
         },
         listLoad: function () {
-            var movies = new MoviesByGenre(878);
+            var movies = new MoviesByGenre(878); //loads a collection of fiction movies. number 878 refers to the code on tmdb for fiction.
             var $el = this.$el;
             var template = this.tpl;
             movies.fetch({
@@ -245,7 +248,7 @@ var WesternMoviesView = Backbone.View.extend({
             $('html, body').animate({scrollTop: 0}, 600);
         },
         listLoad: function () {
-            var movies = new MoviesByGenre(37);
+            var movies = new MoviesByGenre(37); //loads a collection of western movies. number 37 refers to the code on tmdb for western.
             var $el = this.$el;
             var template = this.tpl;
             movies.fetch({
@@ -281,7 +284,7 @@ var SuspenseMoviesView = Backbone.View.extend({
             $('html, body').animate({scrollTop: 0}, 600);
         },
         listLoad: function () {
-            var movies = new MoviesByGenre(10748);
+            var movies = new MoviesByGenre(10748); //loads a collection of suspense movies. number 10748 refers to the code on tmdb for suspense.
             var $el = this.$el;
             var template = this.tpl;
             movies.fetch({
@@ -302,11 +305,16 @@ var MovieDetailsView = Backbone.View.extend({
     el: "#movieDetails",
     tpl: _.template($("#movieDetailsTemplate").html()),
     events: {
-        //"touchend #backArrow": "returnToGenres"
-        //"touchend #suspenseList li": "loadMovie"
+        "touchend #trailerButton": "showTrailer"
     },
     render: function (id) {
 
+    },
+    showTrailer: function(){
+        $("#trailerImage").show();
+        $("#backGenresArrow").hide();
+        $(".contentWrapper").animate({"left": -($('#trailerPage').position().left)}, 300);
+        $("#backDetailsArrow").show();
     },
     viewLoad: function (key) {
         if (key) {
@@ -391,10 +399,99 @@ var Router = Backbone.Router.extend({
         }
     });
 
+
 var detailsView = new MovieDetailsView();
 
-$(function () {
 
+
+//Instantiate Facebook section
+InstanciateFacebook = function (d) {
+    'use strict';
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = "http://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+};
+
+/*
+* @description: Inits the FB object to use locally the Facebook API
+*/
+InitFacebook = function () {
+    'use strict';
+    FB.init({
+        appId      : '448050108575505', // App ID
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+    });
+};
+
+/*
+* @description: This moethod invoques the Facebook login status to determine if the user is logged into Facebook or not
+*/
+Login = function () {
+    'use strict';
+    FB.getLoginStatus(function (response) {
+        var currentURL = window.location;
+        if (response.status === 'connected') {
+            var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
+            console.log('This user is currently logged into Facebook.');
+            if (window.location.href.indexOf("movies") === -1) {
+                window.location.replace("/movies.html");
+            }
+        } else if (response.status === 'not_authorized') {
+            if (window.location.href.indexOf("movies") > -1) {
+                window.location.replace("/index.html");
+            } else {
+                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                    FB.login(function (response) {
+                        if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
+                            FB.api('/me', function (response) {
+                                $('#userMessage').text('Good to see you, ' + response.name + '.');
+                                window.location.replace("/movies.html");
+                            });
+                        } else {
+                            $('#userMessage').text('User cancelled login or did not fully authorize.');
+                        }
+                    });
+                }
+            }
+        } else { //If the user is not logged into Facebook
+            if (window.location.href.indexOf("movies-gallery") > -1) {
+                window.location.replace("/index.html");
+            } else {
+                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                    FB.login(function (response) {
+                        if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
+                            FB.api('/me', function (response) {
+                                $('#userMessage').text('Good to see you, ' + response.name + '.');
+                                window.location.replace("/movies.html");
+                            });
+                        } else {
+                            $('#userMessage').text('User cancelled login or did not fully authorize.');
+                        }
+                    });
+                }
+            }
+        }
+    });
+};
+
+
+
+$(function () {
+    
+//    InstanciateFacebook();
+//    InitFacebook();
+//    Login();
+
+    //Site general listeners Initialization
     $("#backGenresArrow").on("click touchend", function(event){
         $(".contentWrapper").animate({"left": -($('#mainPage').position().left)}, 300);
         $("#backGenresArrow").hide();
@@ -410,8 +507,15 @@ $(function () {
         $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 300);
         $("#backSearchArrow").hide();
         $("#backGenresArrow").show();
-
     });
+    $("#backDetailsArrow").on("click touchend", function(event){
+        $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 300);
+        $("#backGenresArrow").show();
+        $("#backDetailsArrow").hide();
+        $("#trailerImage").hide();
+    });
+
+    //backbone Views initialization
     new ComedyMoviesView().render();
     new ActionMoviesView().render();
     new SuspenseMoviesView().render();
