@@ -26,23 +26,20 @@ $(document).ready(function() {
 <link type="text/css" href="css/general/styles.css" rel="stylesheet"/>
 </head>
 <body>
+    <div id="fixedHeaderLayer"></div>
     <header>
         <div id="logo"></div>
-        <div id="search-box"></div>
-    </header>
-    <article>
-    <div id="wrapper">
-        <h1>Login into Netflics</h1>
-        <div id="login-box">
-            <p id="userMessage">Login using your Facebook account:</p>
-            <div class="fb-login-button" data-show-faces="true" data-width="400" data-max-rows="3"></div>
-            <div id="fb-root"></div>
+        <div id="main-login">
+            <a class="login-button">Login into Netfli<span>cs</span></a>
+            <div id="login-box">
+                <p id="userMessage">Login using your Facebook account:</p>
+                <div class="fb-login-button" data-show-faces="true" data-width="400" data-max-rows="3"></div>
+                <div id="fb-root"></div>
+            </div>
         </div>
-        <div class="content-collection"></div>
-        <!--<div class="slogan">
-        	<p>World Biggest Movies Collection</p>
-        </div>-->
-    </div>
+    </header>
+    <article class="home-page">
+	   <p>World Biggest Movies Collection</p>
    </article>
     <footer>
         <p>El uso del servicio de Netflics y de este sitio web constituye la aceptación de nuestros Términos de uso y nuestra Política de privacidad.<br />

@@ -20,7 +20,7 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
     for (var i = 0; movieResult.results.length >= 0 && i < 19; i++) {
         genre.movieInfo.push({
             title : movieResult.results[i].title,
-            coverImage : "http://cf2.imgobject.com/t/p/w185/" + movieResult.results[i].backdrop_path,
+            coverImage : "http://cf2.imgobject.com/t/p/w185/" + movieResult.results[i].poster_path,
             id : movieResult.results[i].id,
             description: movieDescription[i]
         });
