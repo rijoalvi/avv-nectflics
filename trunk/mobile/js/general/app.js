@@ -1,5 +1,5 @@
 /*
- * Model used to show movies by genere and search results
+ * Model used to show movies by genre and search results
  * Different from the specific model for movie details since they use different WS
  *
  */
@@ -9,9 +9,9 @@ var CarouselMovie = Backbone.Model.extend({
             id: 0,
             original_title: "undefined",
             release_date: "undefined",
-            poster_path: "undefined",
+            poster_path: "undefined"
         },
-         parse: function (response) {
+        parse: function (response) {
             var poster_path = "<img src=\"http://cf2.imgobject.com/t/p/w92" + response.poster_path + "\"/>";
             return {
                 id: response.id,
@@ -36,7 +36,7 @@ var DetailsMovie = Backbone.Model.extend({
             release_date: "undefined",
             poster_path: "undefined",
             overview: "undefined",
-            homepage: "undefined",
+            homepage: "undefined"
         },
         initialize: function (q) {
             if (q.id) {
@@ -69,7 +69,7 @@ var MoviesBySearch = Backbone.Collection.extend({
         type: "movie",   //movie or person
         query: "28",
         url: function () {
-            return "http://api.themoviedb.org/3/search/"+this.type+"?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0&query="+this.query;
+            return "http://api.themoviedb.org/3/search/" + this.type + "?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0&query=" + this.query;
         },
         parse: function (response) {
             return response.results;
@@ -88,8 +88,8 @@ var MoviesBySearch = Backbone.Collection.extend({
     });
 
  /*
- * Collection of movies by genere
- * It's in charge of the WS Call for movies by genere
+ * Collection of movies by genre
+ * It's in charge of the WS Call for movies by genre
  *
  */
 var MoviesByGenre = Backbone.Collection.extend({
@@ -110,12 +110,17 @@ var MoviesByGenre = Backbone.Collection.extend({
 
 
 /*
- * Views for each genere. 
+ * Views for each genre. 
  * Different from the specific model for movie details since they use different WS
- * Functions: 
+ * Functions:
+ * render: initializes the view
  * loadMovie: loads the selected movie information in a detailed view
- * listLoad: loads the movie posters for the specific genere
+ * listLoad: loads the movie posters for the specific genre
  *
+ */
+
+/*
+ * @description: Comedy movies view
  */
 var ComedyMoviesView = Backbone.View.extend({
         el: "#comedyCarousel",
@@ -134,6 +139,7 @@ var ComedyMoviesView = Backbone.View.extend({
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $("#backGenresArrow").show();
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "genre";
         },
         listLoad: function () {
             var movies = new MoviesByGenre(35); //loads a collection of comedy movies. number 35 refers to the code on tmdb for comedy.
@@ -153,6 +159,10 @@ var ComedyMoviesView = Backbone.View.extend({
         }
     });
 
+
+/*
+ * @description: Action movies view
+ */
 var ActionMoviesView = Backbone.View.extend({
         el: "#actionCarousel",
         tpl: _.template($("#actionTemplate").html()),
@@ -171,6 +181,7 @@ var ActionMoviesView = Backbone.View.extend({
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $("#backGenresArrow").show();
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "genre";
         },
         doNothing: function (e) {
             //do nothing
@@ -193,6 +204,9 @@ var ActionMoviesView = Backbone.View.extend({
         }
     });
 
+/*
+ * @description: Fiction movies view
+ */
 var FictionMoviesView = Backbone.View.extend({
         el: "#fictionCarousel",
         tpl: _.template($("#fictionTemplate").html()),
@@ -210,6 +224,7 @@ var FictionMoviesView = Backbone.View.extend({
             $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "genre";
         },
         listLoad: function () {
             var movies = new MoviesByGenre(878); //loads a collection of fiction movies. number 878 refers to the code on tmdb for fiction.
@@ -229,6 +244,9 @@ var FictionMoviesView = Backbone.View.extend({
         }
     });
 
+/*
+ * @description: Western movies view
+ */
 var WesternMoviesView = Backbone.View.extend({
         el: "#westernCarousel",
         tpl: _.template($("#westernTemplate").html()),
@@ -246,6 +264,7 @@ var WesternMoviesView = Backbone.View.extend({
             $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "genre";
         },
         listLoad: function () {
             var movies = new MoviesByGenre(37); //loads a collection of western movies. number 37 refers to the code on tmdb for western.
@@ -265,6 +284,9 @@ var WesternMoviesView = Backbone.View.extend({
         }
     });
 
+/*
+ * @description: suspense movies view
+ */
 var SuspenseMoviesView = Backbone.View.extend({
         el: "#suspenseCarousel",
         tpl: _.template($("#suspenseTemplate").html()),
@@ -282,6 +304,7 @@ var SuspenseMoviesView = Backbone.View.extend({
             $("#backGenresArrow").show();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "genre";
         },
         listLoad: function () {
             var movies = new MoviesByGenre(10748); //loads a collection of suspense movies. number 10748 refers to the code on tmdb for suspense.
@@ -301,25 +324,31 @@ var SuspenseMoviesView = Backbone.View.extend({
         }
     });
 
+/*
+ * Movie details view 
+ * Shows the specific details for a selected movie
+ * Functions: 
+ * showTrailer: loads the page and shows the section where there is going to be a trailer for the movie (in the future)
+ * viewLoad: loads the poster, release date and description of the selected movie.
+ *
+ */
 var MovieDetailsView = Backbone.View.extend({
     el: "#movieDetails",
     tpl: _.template($("#movieDetailsTemplate").html()),
     events: {
         "touchend #trailerButton": "showTrailer"
     },
-    render: function (id) {
-
-    },
-    showTrailer: function(){
+    showTrailer: function () {
         $("#trailerImage").show();
         $("#backGenresArrow").hide();
+        $("#backSearchArrow").hide();
         $(".contentWrapper").animate({"left": -($('#trailerPage').position().left)}, 300);
         $("#backDetailsArrow").show();
     },
     viewLoad: function (key) {
         if (key) {
             $("#searchImage").hide();
-            var movie = new DetailsMovie({id:key});
+            var movie = new DetailsMovie({id: key});
             var $el = this.$el;
             var template = this.tpl;
             movie.fetch({
@@ -336,6 +365,18 @@ var MovieDetailsView = Backbone.View.extend({
     }
 });
 
+
+/*
+ * Search movies view 
+ * handles the search of a query defined by the user and its results
+ * Functions: 
+ * loadMovie: loads the MovieDetailsView of a selected item
+ * listLoad: listLoad: loads the movie posters of the results query
+ * resetSearch: removes the previous search result elements from the dom and from the screen, hides the searchAgain button and cleans the search field
+ * close: removes the previous search result elements from the dom and from the screen and hides the searchAgain  button
+ * remove: removes the previous search result elements from the dom
+ *
+ */
 var SearchMoviesView = Backbone.View.extend({
         el: "#searchResults",
         tpl: _.template($("#searchTemplate").html()),
@@ -344,15 +385,13 @@ var SearchMoviesView = Backbone.View.extend({
             "touchend #searchAgainButton": "resetSearch",
             "touchend #searchList li": "loadMovie"
         },
-        render: function () {
-
-        },
         loadMovie: function (e) {
             detailsView.viewLoad(e.currentTarget.id);
             $("#backSearchArrow").show();
             $("#backGenresArrow").hide();
             $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 600);
             $('html, body').animate({scrollTop: 0}, 600);
+            trailerTracker = "search";
         },
         listLoad: function () {
             this.close();
@@ -375,24 +414,25 @@ var SearchMoviesView = Backbone.View.extend({
             });
             $("#searchAgainButton").show();
         },
-        resetSearch: function(){
-            this.remove();
-            $("#searchAgainButton").hide();
+        resetSearch: function () {
+            this.close();
             $("#searchField").val("");
         },
-        close: function(){
+        close: function () {
             this.remove();
             $("#searchAgainButton").hide();
         },
-        remove: function(){
+        remove: function () {
             this.$('.jcarousel-skin-tango').remove().end().append('<ul id="searchList" class="jcarousel-skin-tango"></ul>');
         }
     });
 
-
+/*
+* @description: Backbone application router.
+*/
 var Router = Backbone.Router.extend({
         routes: {
-            "listLoad/:query": "listLoad"  // #listLoad/kiwis
+            "listLoad/: query": "listLoad"  // #listLoad/kiwis
         },
         listLoad: function (query) {
             alert(query);
@@ -400,7 +440,15 @@ var Router = Backbone.Router.extend({
     });
 
 
+/*
+* @description: This view is instanced in the window so that the same instance can be used by any other view
+*/
 var detailsView = new MovieDetailsView();
+
+/*
+* @description: This variable keeps a track of the view from where the MovieDetailsView is called
+*/
+var trailerTracker = "genre";
 
 
 
@@ -432,7 +480,7 @@ InitFacebook = function () {
 };
 
 /*
-* @description: This moethod invoques the Facebook login status to determine if the user is logged into Facebook or not
+* @description: This method invoques the Facebook login status to determine if the user is logged into Facebook or not
 */
 Login = function () {
     'use strict';
@@ -449,7 +497,7 @@ Login = function () {
             if (window.location.href.indexOf("movies") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                if (currentURL === "http://test7.dynamis-soft.com/mobile/" || currentURL === "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -466,7 +514,7 @@ Login = function () {
             if (window.location.href.indexOf("movies-gallery") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                if (currentURL === "http://test7.dynamis-soft.com/mobile/" || currentURL === "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -484,33 +532,41 @@ Login = function () {
 };
 
 
-
+/*
+* @description: Inits the application. Sets listeners for the elements that aren't inside any views, and initializes the backbone views
+*/
 $(function () {
-    
+    facebook login check initialization
 //    InstanciateFacebook();
 //    InitFacebook();
 //    Login();
 
     //Site general listeners Initialization
-    $("#backGenresArrow").on("click touchend", function(event){
+    $("#backGenresArrow").on("click touchend", function (event) {
         $(".contentWrapper").animate({"left": -($('#mainPage').position().left)}, 300);
         $("#backGenresArrow").hide();
         $("#searchImage").show();
     });
-    $("#searchImage").on("click touchend", function(event){
+    $("#searchImage").on("click touchend", function (event) {
         $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 300);
         $("#backGenresArrow").hide();
         $("#searchImage").hide();
         $("#backGenresArrow").show();
     });
-    $("#backSearchArrow").on("click touchend", function(event){
+    $("#backSearchArrow").on("click touchend", function (event) {
         $(".contentWrapper").animate({"left": -($('#searchPage').position().left)}, 300);
         $("#backSearchArrow").hide();
         $("#backGenresArrow").show();
     });
-    $("#backDetailsArrow").on("click touchend", function(event){
+    $("#backDetailsArrow").on("click touchend", function (event) {
         $(".contentWrapper").animate({"left": -($('#descriptionPage').position().left)}, 300);
-        $("#backGenresArrow").show();
+        if (trailerTracker === "genre") {
+            $("#backSearchArrow").hide();
+            $("#backGenresArrow").show();
+        } else if (trailerTracker === "search") {
+            $("#backGenresArrow").hide();
+            $("#backSearchArrow").show();
+        }
         $("#backDetailsArrow").hide();
         $("#trailerImage").hide();
     });
