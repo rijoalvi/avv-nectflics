@@ -220,8 +220,8 @@ Netflics.Controller = function () {
         var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
         moviesArray.push(moviesReal);
     };
-
     Netflics.ShowMoviesLists(moviesArray);
+
 };
 
 /*
@@ -229,33 +229,36 @@ Netflics.Controller = function () {
 */
 Netflics.ShowMoviesLists = function (moviesArray) {
     'use strict';
+    var tempArray = new Array();
+    var idTemp = 1;
+    var temp = $("<div/>");
     for (var i = 0; i < moviesArray.length; i++) {
-        console.log(moviesArray[i]);
-
+        tempArray = moviesArray[i].getMoviesArray();
+        for (var j = 0; j < 10; j++) {
+            var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
+            var item = '<li id="' + tempArray[j].id + '"><a href="#" class="trigger"><img src="' + tempArray[j].coverImage + '" title="' + tempArray[j].title + '"" /></a>' + body + '</li>';
+            $('#list' + idTemp).append(item);
+        };
+        idTemp++;
     };
-    /*for (var i=0; i < myArray.length; i++) {
-        //console.log(myArray[i].original_title + "\n");
-        var path = "http://cf2.imgobject.com/t/p/w185" + myArray[i].poster_path;
-        var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
-        var item = '<li id="' + myArray[i].id + '"><a href="#" class="trigger"><img src="' + path + '" /></a>' + body + '</li>';
-        $('#list1').append(item);
-    }*/
-
+    Netflics.UIManager();
 };
 
 /*
 * @description: Add listeners to the DOM catched elements
 */
-Netflics.Listener = function (cache) {
+Netflics.Listener = function () {
     'use strict';
-    this.listen = function () {
-        for (var i = 0 ; i > cache.length; i++) {
-            cache.cache[i].jcarousel({wrap: 'circular'});
-            cache.cache[i].on('hover', 'li', function (e) {
+    var idTemp = 1;
+    this.listen = function (cache) {
+        for (var i = 0 ; i < 5; i++) {
+            cache["list"+idTemp].jcarousel({wrap: 'circular'});
+            cache["list"+idTemp].on('hover', 'li', function (e) {
                 e.preventDefault();
-                //console.log($(this).attr('id'));
+                console.log($(this).attr('id'));
                 $(this).find('p.movie-title').text('Prueba');
             });
+            idTemp++;
         };
     };
 };
@@ -272,10 +275,8 @@ Netflics.UIManager = function () {
         list4: $('#list4'),
         list5: $('#list5')
     };
-    this.initialize = function () {
-        var listener = new Netflics.Listener(cache);
-        listener.listen();
-    };
+    var listener = new Netflics.Listener();
+    listener.listen(cache);
 };
 
 /*
