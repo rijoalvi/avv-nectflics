@@ -18,7 +18,7 @@ $(document).ready(function() {
     if (isMobile) {
         window.location.replace("/mobile/");
     } else {
-        Netflics.InstanciateFacebook();
+        Netflics.InstanciateFacebook(document);
         Netflics.InitFacebook();
         Netflics.Login();
         Netflics.Controller();
@@ -52,7 +52,6 @@ $(document).ready(function() {
 
 
 			<br />
-	        
 	        <div id="fb-root"></div>
 	        <div class="content-collection"></div>
 	        <!--<div class="slogan">
