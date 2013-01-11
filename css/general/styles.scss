@@ -85,8 +85,8 @@ body {
 		#search-box {
 			float: right;
 			background-color: #ffffff;
-			margin-top: 35px;
-			margin-right: 25px;
+			margin-top: 20px;
+			margin-right: 20px;
 			border-top: 1px solid #5C5C5C;
 			border-left: 1px solid #5C5C5C;
 			#global-search {
@@ -137,7 +137,7 @@ body {
 
 		#wrapper {
 		width: 900px;
-		top: 120px;
+		top: 80px;
 		left: 0;
 		margin: auto;
 		position: relative;
@@ -188,8 +188,8 @@ body {
 				    height: 236px;
 			    }
     			.popup {
-    				width: 250px;
-    				padding: 10px;
+    				width: 156px;
+    				padding: 5px;
     				margin-right: 20px;
     				background: rgba(0, 0, 0, 0.8);
 			   		border: 1px solid #ccc;
@@ -197,11 +197,15 @@ body {
 				    position: relative;
 				    display: none;
 				    clear: both;
+				    font-size: 10px;
+				    z-index: 999;
 
-				    .movie-title {
-				    	text-align: center;
-				    	font-weight: bold;
-
+				    a {
+				    	color: #ffffff;
+				    	text-decoration: none;
+				    }
+				    a:hover {
+				    	color: #205099;
 				    }
 				}
 			}
@@ -368,6 +372,23 @@ body {
 				font-size: 18px;
 				text-align: center;
 				border-radius: 10px;
+			}
+
+			.video-coming {
+				text-align: center;
+				font-size: 16px;
+
+			    a {
+			    	color: #ffffff;
+			    	text-decoration: none;
+			    }
+			    a:hover {
+			    	color: #205099;
+			    }
+			}
+
+			.gallery-container {
+				margin-bottom: 70px;
 			}
 
 		}	

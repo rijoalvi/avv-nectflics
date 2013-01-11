@@ -209,8 +209,7 @@ Netflics.Controller = function () {
     var movieOverview = [];
     var movieService = new Netflics.Service();
     var listOfGenres = movieService.getListOfGenre();
-
-    for (var i = 0; listOfGenres.genres.length >= 0  && i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
         var genreID = listOfGenres.genres[i].id;
         var genreName = listOfGenres.genres[i].name;
         var movieInfo = movieService.getListOfMoviesByGenres(listOfGenres.genres[i].id);
@@ -231,11 +230,10 @@ Netflics.ShowMoviesLists = function (moviesArray) {
     'use strict';
     var tempArray = new Array();
     var idTemp = 1;
-    var temp = $("<div/>");
     for (var i = 0; i < moviesArray.length; i++) {
         tempArray = moviesArray[i].getMoviesArray();
         for (var j = 0; j < 10; j++) {
-            var body = '<div class="popup"><p id="movie-title"></p><p id="movie-overview"></p><p id="movie-year"></p><a href="#" /></div>';
+            var body = '<div class="popup"><p><b>Title</b>: ' + tempArray[j].title + '</p><p><b>Description</b>: ' + tempArray[j].description + '</p><p><b>Release date</b>: </p><p><a href="view-movie.html" title="View Movie">View Movie</a></p></div>';
             var item = '<li id="' + tempArray[j].id + '"><a href="#" class="trigger"><img src="' + tempArray[j].coverImage + '" title="' + tempArray[j].title + '"" /></a>' + body + '</li>';
             $('#list' + idTemp).append(item);
         };
@@ -252,12 +250,7 @@ Netflics.Listener = function () {
     var idTemp = 1;
     this.listen = function (cache) {
         for (var i = 0 ; i < 5; i++) {
-            cache["list"+idTemp].jcarousel({wrap: 'circular'});
-            cache["list"+idTemp].on('hover', 'li', function (e) {
-                e.preventDefault();
-                console.log($(this).attr('id'));
-                $(this).find('p.movie-title').text('Prueba');
-            });
+            cache["list"+idTemp].jcarousel({wrap: 'last'});
             idTemp++;
         };
     };
