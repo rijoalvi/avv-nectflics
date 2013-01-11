@@ -1,9 +1,9 @@
 $(function () {
-  $('#list1 li').each(function () {
+  $('#list1 li, #list2 li, #list3 li, #list4 li, #list5 li').each(function () {
     // options
     var distance = 10;
     var time = 250;
-    var hideDelay = 500;
+    var hideDelay = 100;
 
     var hideDelayTimer = null;
 
@@ -27,9 +27,9 @@ $(function () {
 
         // reset position of popup box
         popup.css({
-          top: -160,
+          top: -230,
           left: 0,
-          display: 'block' // brings the popup back in to view
+          display: 'block'
         })
 
         // (we're using chaining on the popup) now animate it's opacity and position

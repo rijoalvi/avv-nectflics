@@ -61,8 +61,8 @@ body {
     body header #search-box {
       float: right;
       background-color: #ffffff;
-      margin-top: 35px;
-      margin-right: 25px;
+      margin-top: 20px;
+      margin-right: 20px;
       border-top: 1px solid #5C5C5C;
       border-left: 1px solid #5C5C5C; }
       body header #search-box #global-search #searchField {
@@ -98,7 +98,7 @@ body {
     display: block; }
     body article #wrapper {
       width: 900px;
-      top: 120px;
+      top: 80px;
       left: 0;
       margin: auto;
       position: relative;
@@ -138,18 +138,22 @@ body {
           width: 166px;
           height: 236px; }
         body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup {
-          width: 250px;
-          padding: 10px;
+          width: 156px;
+          padding: 5px;
           margin-right: 20px;
           background: rgba(0, 0, 0, 0.8);
           border: 1px solid #ccc;
           border-radius: 10px;
           position: relative;
           display: none;
-          clear: both; }
-          body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup .movie-title {
-            text-align: center;
-            font-weight: bold; }
+          clear: both;
+          font-size: 10px;
+          z-index: 999; }
+          body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup a {
+            color: #ffffff;
+            text-decoration: none; }
+          body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup a:hover {
+            color: #205099; }
       body article #wrapper .jcarousel-skin-tango .jcarousel-item-horizontal {
         margin-left: 0;
         margin-right: 10px; }
@@ -259,6 +263,16 @@ body {
         font-size: 18px;
         text-align: center;
         border-radius: 10px; }
+      body article #wrapper .video-coming {
+        text-align: center;
+        font-size: 16px; }
+        body article #wrapper .video-coming a {
+          color: #ffffff;
+          text-decoration: none; }
+        body article #wrapper .video-coming a:hover {
+          color: #205099; }
+      body article #wrapper .gallery-container {
+        margin-bottom: 70px; }
   body footer {
     width: 98%;
     height: auto;
