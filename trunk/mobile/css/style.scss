@@ -327,7 +327,6 @@ body {
 		}					
 
 		#login-box {
-			text-align: center;
 			clear: both;
 			width: 220px;
 			min-height: 100px;
@@ -336,7 +335,21 @@ body {
 			padding: 10px;
 			margin: 0px auto;
 			margin-top: auto;
-		}		
+			font-size: 0.6em;
+		}
+
+		.fb-login-button {
+			width: 145px;
+			height: 22px;
+			margin-top: 15px;
+			margin-left: 6px;
+			overflow: hidden;
+			text-align: center;
+		}
+
+		#userMessage{
+			text-align: center;
+		}
 	}
 
 	#footer {
