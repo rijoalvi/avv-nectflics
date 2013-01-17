@@ -17,7 +17,7 @@ $(document).ready(function() {
     if (isMobile) {
         window.location.replace("/mobile/");
     } else {
-        Netflics.InstanciateFacebook();
+        Netflics.InstanciateFacebook(document);
         Netflics.InitFacebook();
         Netflics.Login();
     }
