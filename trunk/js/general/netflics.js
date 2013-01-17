@@ -308,15 +308,17 @@ Netflics.Login = function () {
     'use strict';
     FB.getLoginStatus(function (response) {
         var currentURL = window.location;
+        //console.log(response);
         if (response.status === 'connected') {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             console.log('This user is currently logged into Facebook.');
-            if (window.location.href.indexOf("movies-gallery") === -1) {
+            if (window.location.href.indexOf("movies-gallery") === -1 || window.location.href.indexOf("search") === -1 || window.location.href.indexOf("view-movie") === -1) {
                 window.location.replace("/movies-gallery.html");
             }
+            $('#userMessage').text('Good to see you, ' + response.name + '.');
         } else if (response.status === 'not_authorized') {
-            if (window.location.href.indexOf("movies-gallery") > -1) {
+            if (window.location.href.indexOf("movies-gallery") > -1 || window.location.href.indexOf("search") > -1 || window.location.href.indexOf("view-movie") > -1) {
                 window.location.replace("/index.html");
             } else {
                 if (currentURL == "http://test7.dynamis-soft.com/" || currentURL == "http://test7.dynamis-soft.com/index.html") { //If the user is in the index
@@ -333,7 +335,7 @@ Netflics.Login = function () {
                 }
             }
         } else { //If the user is not logged into Facebook
-            if (window.location.href.indexOf("movies-gallery") > -1) {
+            if (window.location.href.indexOf("movies-gallery") > -1 || window.location.href.indexOf("search") > -1 || window.location.href.indexOf("view-movie") > -1) {
                 window.location.replace("/index.html");
             } else {
                 if (currentURL == "http://test7.dynamis-soft.com/" || currentURL == "http://test7.dynamis-soft.com/index.html") { //If the user is in the index
