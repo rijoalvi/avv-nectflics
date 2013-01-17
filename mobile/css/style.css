@@ -254,7 +254,6 @@ body {
       background-size: auto 150px;
       background-repeat: no-repeat; }
     body #login_content #login-box {
-      text-align: center;
       clear: both;
       width: 220px;
       min-height: 100px;
@@ -262,7 +261,17 @@ body {
       border-radius: 10px;
       padding: 10px;
       margin: 0px auto;
-      margin-top: auto; }
+      margin-top: auto;
+      font-size: 0.6em; }
+    body #login_content .fb-login-button {
+      width: 145px;
+      height: 22px;
+      margin-top: 15px;
+      margin-left: 6px;
+      overflow: hidden;
+      text-align: center; }
+    body #login_content #userMessage {
+      text-align: center; }
   body #footer {
     clear: both;
     color: #FFFFFF;

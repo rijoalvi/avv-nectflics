@@ -497,7 +497,7 @@ Login = function () {
             if (window.location.href.indexOf("movies") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currentURL === "http://test7.dynamis-soft.com/mobile/" || currentURL === "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                if (currentURL === "http://www.acope.com/test123/mobile/" || currentURL === "http://www.acope.com/test123/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -514,7 +514,7 @@ Login = function () {
             if (window.location.href.indexOf("movies-gallery") > -1) {
                 window.location.replace("/index.html");
             } else {
-                if (currentURL === "http://test7.dynamis-soft.com/mobile/" || currentURL === "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
+                if (currentURL === "http://www.acope.com/test123/mobile/" || currentURL === "http://www.acope.com/test123/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
@@ -536,10 +536,10 @@ Login = function () {
 * @description: Inits the application. Sets listeners for the elements that aren't inside any views, and initializes the backbone views
 */
 $(function () {
-    facebook login check initialization
-//    InstanciateFacebook();
-//    InitFacebook();
-//    Login();
+    //facebook login check initialization
+    InstanciateFacebook(document);
+    InitFacebook();
+    Login();
 
     //Site general listeners Initialization
     $("#backGenresArrow").on("click touchend", function (event) {
