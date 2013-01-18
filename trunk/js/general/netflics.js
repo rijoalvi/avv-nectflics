@@ -9,7 +9,7 @@ var Netflics = Netflics || {};
 * @param movieResult: Array of Movies for a specific Genre
 * @param movieDescription: Array of descriptions for each movie
 */
-Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
+Netflics.Movies = function (genreID, genreName, movieResult, movieDescription, movieRelease) {
     'use strict';
     var genre = {
         name : genreName,
@@ -22,7 +22,8 @@ Netflics.Movies = function (genreID, genreName, movieResult, movieDescription) {
             title : movieResult.results[i].title,
             coverImage : "http://cf2.imgobject.com/t/p/w185/" + movieResult.results[i].poster_path,
             id : movieResult.results[i].id,
-            description: movieDescription[i]
+            description: movieDescription[i],
+            release: movieRelease[i]
         });
     };
     
@@ -182,22 +183,23 @@ Netflics.Service = function () {
     * @description: Method that return a specific movie overview
     * @param movieId: The id(Number) of a specific movie
     */
-    this.getMovieOverviewById = function (movieId) {
-        var movieOverview = {};
+    this.getMovieExtraInfoById = function (movieId) {
+        var movieExtraInfo = {};
         $.ajax({
             async: false,
             type: 'GET',
             dataType: 'json',
             url: 'http://private-f481-themoviedb.apiary.io/3/movie/' + movieId + '?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0',
             success: function(json) {
-                movieOverview = json.overview;
+                movieExtraInfo.release = json.release_date;
+                movieExtraInfo.overview = json.overview;
             },
             error: function(e) {
                 console.log(e.message);
                 alert("Error");
             }
         });
-        return movieOverview;
+        return movieExtraInfo;
     };
 };
 
@@ -206,17 +208,21 @@ Netflics.Service = function () {
 */
 Netflics.Controller = function () {
     var moviesArray = [];
-    var movieOverview = [];
+    var movieExtraInfo = {};
     var movieService = new Netflics.Service();
     var listOfGenres = movieService.getListOfGenre();
+    var movieRelease = [];
+    var movieOverview = [];
     for (var i = 0; i < 5; i++) {
         var genreID = listOfGenres.genres[i].id;
         var genreName = listOfGenres.genres[i].name;
         var movieInfo = movieService.getListOfMoviesByGenres(listOfGenres.genres[i].id);
         for (var j = 0; listOfGenres.genres.length >= 0  && j < 19; j++) {
-            movieOverview[j] = movieService.getMovieOverviewById(movieInfo.results[j].id);
+            movieExtraInfo = movieService.getMovieExtraInfoById(movieInfo.results[j].id);
+            movieRelease[j] = movieExtraInfo.release;
+            movieOverview[j] = movieExtraInfo.overview;
         };
-        var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview);
+        var moviesReal = new Netflics.Movies(genreID, genreName, movieInfo, movieOverview, movieRelease);
         moviesArray.push(moviesReal);
     };
     Netflics.ShowMoviesLists(moviesArray);
@@ -233,7 +239,7 @@ Netflics.ShowMoviesLists = function (moviesArray) {
     for (var i = 0; i < moviesArray.length; i++) {
         tempArray = moviesArray[i].getMoviesArray();
         for (var j = 0; j < 10; j++) {
-            var body = '<div class="popup"><p><b>Title</b>: ' + tempArray[j].title + '</p><p><b>Description</b>: ' + tempArray[j].description + '</p><p><b>Release date</b>: </p><p><a href="view-movie.html" title="View Movie">View Movie</a></p></div>';
+            var body = '<div class="popup"><p><b>Title</b>: ' + tempArray[j].title + '</p><p><b>Description</b>: <textarea readonly>' + tempArray[j].description + '</textarea></p><p><b>Release date</b>: ' + tempArray[j].release + '</p><p><a href="view-movie.html" title="View Movie">View Movie</a></p></div>';
             var item = '<li id="' + tempArray[j].id + '"><a href="#" class="trigger"><img src="' + tempArray[j].coverImage + '" title="' + tempArray[j].title + '"" /></a>' + body + '</li>';
             $('#list' + idTemp).append(item);
         };
@@ -270,6 +276,66 @@ Netflics.UIManager = function () {
     };
     var listener = new Netflics.Listener();
     listener.listen(cache);
+};
+
+/*
+* @description: Get a url variable receiving it's name by parameter and returns it's value
+* @param name: name of the parameter
+*/
+Netflics.getUrlVar = function (name) {
+    'use strict';
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec(window.location.href);
+    if (results === null){
+    return "";
+    } else {
+    return results[1];
+    }
+};
+
+Netflics.getMovieDescription = function (id) {
+    'use strict';
+
+};
+
+/*
+* @description: Does a search by ajax using a key word
+* @param name: name of the parameter
+*/
+Netflics.Search = function (q) {
+    'use strict';
+    var qResults = {};
+    var ulResults = $("#list1");
+    var item = "";
+    var body = "";
+    var movieExtraInfo = {};
+    var movieService = new Netflics.Service();
+    $.ajax({
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        url: 'http://api.themoviedb.org/3/search/movie?api_key=d0685fdb19e4c0aa2fbc292873dc2cc0&query=' + q,
+        success: function(json) {
+            qResults = json;
+        },
+        error: function(e) {
+            console.log(e.message);
+            alert("Error");
+        }
+    });
+    for(var i = 0; i < qResults.results.length; i++){
+        movieExtraInfo = movieService.getMovieExtraInfoById(qResults.results[i].id);
+        body = '<div class="popup"><p><b>Title</b>: ' + qResults.results[i].title + '</p><p><b>Description</b>:  <textarea readonly>' + movieExtraInfo.overview + '</textarea></p><p><b>Release date</b>: ' + movieExtraInfo.release + '</p><p><a href="view-movie.html" title="View Movie">View Movie</a></p></div>';
+        item = '<li id="' + qResults.results[i].id + '"><a href="#" class="trigger"><img src="http://cf2.imgobject.com/t/p/w185/' + qResults.results[i].poster_path + '" title="' + qResults.results[i].title + '"" /></a>' + body + '</li>';
+        //item = '<img src="http://cf2.imgobject.com/t/p/w185/' + qResults.results[i].poster_path + '" />'
+        ulResults.append(item);
+    }
+    ulResults.jcarousel({wrap: 'last'});
+    //http://cf2.imgobject.com/t/p/w185/
+    console.log(qResults);
+    //return qResults;
 };
 
 /*

@@ -9,9 +9,20 @@ body {
 	background-attachment: fixed;
 	background-color: $bg-color;
 	color: $font-color;
+	font-family: arial;
 
 	h1 {
     	font-size: 30px;
+    	color: #ffffff;
+	}
+
+	textarea {
+		font-size: 11px;
+		background-color: transparent;
+		width: 156px;
+		height: 100px;
+		border: none;
+		color: #ffffff;
 	}
 
 	#fixedHeaderLayer {
@@ -34,6 +45,7 @@ body {
 	    min-width: 900px;
 	    box-shadow: 0 1px 6px black;
 		background-color: $myBlue;
+		padding: 10px 0;
 	    /*font-size: 13px;*/
 
 		#logo {
@@ -80,6 +92,7 @@ body {
 				color: $myBlue;
 				background: #ffffff;
 			}
+
 		}
 
 		#search-box {
@@ -94,15 +107,15 @@ body {
 				#searchField {
 					display: inline-block;
 					border: none;
-					font-size: 11px;
+					font-size: 14px;
 					margin: 0;
 					outline: none;
-					padding: 2px;
+					padding: 10px;
 					vertical-align: middle;
 					background-color: transparent;
 					vertical-align: middle;
 					width: 222px;
-					height: 20px;
+					height: 5px;
 					line-height: 20px;
 					color: #666;
 				}
@@ -121,6 +134,12 @@ body {
 			}
 
 		}
+
+		h1 {
+			text-align: center;
+			display: inline;
+			margin-left: 400px;
+		}
 	}
 
 	article.home-page {
@@ -137,7 +156,7 @@ body {
 
 		#wrapper {
 		width: 900px;
-		top: 80px;
+		top: 150px;
 		left: 0;
 		margin: auto;
 		position: relative;
@@ -189,7 +208,7 @@ body {
 			    }
     			.popup {
     				width: 156px;
-    				padding: 5px;
+    				padding: 2px;
     				margin-right: 20px;
     				background: rgba(0, 0, 0, 0.8);
 			   		border: 1px solid #ccc;
@@ -197,7 +216,7 @@ body {
 				    position: relative;
 				    display: none;
 				    clear: both;
-				    font-size: 10px;
+				    font-size: 11px;
 				    z-index: 999;
 
 				    a {
@@ -389,6 +408,14 @@ body {
 
 			.gallery-container {
 				margin-bottom: 70px;
+			}
+
+			#results-message {
+				font-size: 20px;
+				text-align: center;
+				padding: 80px 10px;
+				background-color: rgba(0, 0, 0, 0.8);
+				border-radius: 10px;
 			}
 
 		}	

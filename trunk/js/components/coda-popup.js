@@ -4,34 +4,27 @@ $(function () {
     var distance = 10;
     var time = 250;
     var hideDelay = 100;
-
     var hideDelayTimer = null;
-
     // tracker
     var beingShown = false;
     var shown = false;
-    
     var trigger = $('.trigger', this);
     var popup = $('.popup', this).css('opacity', 0);
-
     // set the mouseover and mouseout on both element
     $([trigger.get(0), popup.get(0)]).mouseover(function () {
       // stops the hide event if we move from the trigger to the popup element
       if (hideDelayTimer) clearTimeout(hideDelayTimer);
-
       // don't trigger the animation again if we're being shown, or already visible
       if (beingShown || shown) {
         return;
       } else {
         beingShown = true;
-
         // reset position of popup box
         popup.css({
           top: -230,
           left: 0,
           display: 'block'
         })
-
         // (we're using chaining on the popup) now animate it's opacity and position
         .animate({
           top: '-=' + distance + 'px',
@@ -45,7 +38,6 @@ $(function () {
     }).mouseout(function () {
       // reset the timer if we get fired again - avoids double animations
       if (hideDelayTimer) clearTimeout(hideDelayTimer);
-      
       // store the timer so that it can be cleared in the mouseover if required
       hideDelayTimer = setTimeout(function () {
         hideDelayTimer = null;
