@@ -29,25 +29,21 @@ $(document).ready(function() {
 	<div id="fixedHeaderLayer"></div>
 	<header>
 		<div id="logo"></div>
+		<h1>View Movie</h1>
 		<div id="search-box">
 			<p id="userMessage"></p>
 			<form id="global-search" name="search" action="search.html" method="GET">
-				<input type="text" tabindex="1" id="searchField" name="v1" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+					<input type="text" tabindex="1" id="searchField" name="q" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" required="required" placeholder="Enter a keyword" maxlength="15">
 				<button type="submit" name="search_submit" tabindex="2">Search</button>
 			</form>
 		</div>
 	</header>
 	<article>
 		<div id="wrapper">
-        
 			<div class="video-coming">
-				<h1>View Movie</h1>
 				<img src="images/video-coming-soon.jpg" />
 				<p><a href="movies-gallery.html">Back to movies gallery</a></p>
 			</div>
-
-
-			<br />
 	        <div id="fb-root"></div>
 	        <!--<div class="slogan">
 	        	<p>World Biggest Movies Collection</p>

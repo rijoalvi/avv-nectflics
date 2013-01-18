@@ -3,9 +3,18 @@ body {
   background-image: url("../../images/bg-body.jpg");
   background-attachment: fixed;
   background-color: #e1e1e1;
-  color: white; }
+  color: white;
+  font-family: arial; }
   body h1 {
-    font-size: 30px; }
+    font-size: 30px;
+    color: #ffffff; }
+  body textarea {
+    font-size: 11px;
+    background-color: transparent;
+    width: 156px;
+    height: 100px;
+    border: none;
+    color: #ffffff; }
   body #fixedHeaderLayer {
     position: fixed;
     left: 0;
@@ -24,6 +33,7 @@ body {
     min-width: 900px;
     box-shadow: 0 1px 6px black;
     background-color: #205099;
+    padding: 10px 0;
     /*font-size: 13px;*/ }
     body header #logo {
       float: left;
@@ -68,15 +78,15 @@ body {
       body header #search-box #global-search #searchField {
         display: inline-block;
         border: none;
-        font-size: 11px;
+        font-size: 14px;
         margin: 0;
         outline: none;
-        padding: 2px;
+        padding: 10px;
         vertical-align: middle;
         background-color: transparent;
         vertical-align: middle;
         width: 222px;
-        height: 20px;
+        height: 5px;
         line-height: 20px;
         color: #666; }
       body header #search-box #global-search button {
@@ -88,6 +98,10 @@ body {
         width: 16px;
         border: none;
         cursor: pointer; }
+    body header h1 {
+      text-align: center;
+      display: inline;
+      margin-left: 400px; }
   body article.home-page {
     margin: 0 auto;
     position: relative;
@@ -98,7 +112,7 @@ body {
     display: block; }
     body article #wrapper {
       width: 900px;
-      top: 80px;
+      top: 150px;
       left: 0;
       margin: auto;
       position: relative;
@@ -139,7 +153,7 @@ body {
           height: 236px; }
         body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup {
           width: 156px;
-          padding: 5px;
+          padding: 2px;
           margin-right: 20px;
           background: rgba(0, 0, 0, 0.8);
           border: 1px solid #ccc;
@@ -147,7 +161,7 @@ body {
           position: relative;
           display: none;
           clear: both;
-          font-size: 10px;
+          font-size: 11px;
           z-index: 999; }
           body article #wrapper .jcarousel-skin-tango .jcarousel-item .popup a {
             color: #ffffff;
@@ -273,6 +287,12 @@ body {
           color: #205099; }
       body article #wrapper .gallery-container {
         margin-bottom: 70px; }
+      body article #wrapper #results-message {
+        font-size: 20px;
+        text-align: center;
+        padding: 80px 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 10px; }
   body footer {
     width: 98%;
     height: auto;

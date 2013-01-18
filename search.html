@@ -9,6 +9,7 @@
 <script type="text/javascript" src="js/components/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript" src="js/general/jQuery.browser.mobile.js"></script>
+<script type="text/javascript" src="js/components/jquery.jcarousel.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     'use strict';
@@ -19,6 +20,13 @@ $(document).ready(function() {
         Netflics.InstanciateFacebook(document);
         Netflics.InitFacebook();
         Netflics.Login();
+        var query = Netflics.getUrlVar("q");
+        if(query !== ''){
+        	Netflics.Search(query);
+        	$('#results-message').hide();
+        } else {
+        	$('#results-message').text('').text('No results found, please try again.');
+        }
     }
     
 });
@@ -29,22 +37,22 @@ $(document).ready(function() {
 	<div id="fixedHeaderLayer"></div>
 	<header>
 		<div id="logo"></div>
+		<h1>Search Results</h1>
 		<div id="search-box">
 			<p id="userMessage"></p>
 			<form id="global-search" name="search" action="search.html" method="GET">
-				<input type="text" tabindex="1" id="searchField" name="v1" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+				<input type="text" tabindex="1" id="searchField" name="q" value="" class="ui-autocomplete-input default" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" required="required" placeholder="Enter a keyword" maxlength="15">
 				<button type="submit" name="search_submit" tabindex="2">Search</button>
 			</form>
 		</div>
 	</header>
 	<article>
 		<div id="wrapper">
-        <h1>Search Results</h1>
+			<ul id="list1" class="jcarousel-skin-tango"></ul>
+			<p id="results-message"></p>
 			<div class="video-coming">
-				<img src="images/video-coming-soon.jpg" />
+				<p><a href="movies-gallery.html">Back to movies gallery</a></p>
 			</div>
-
-
 			<br />
 	        <div id="fb-root"></div>
 	        <div class="content-collection"></div>
@@ -59,5 +67,6 @@ $(document).ready(function() {
     	</p>
     </footer>
     <script type="text/javascript" src="js/general/netflics.js"></script>
+    <script type="text/javascript" src="js/components/coda-popup.js"></script>
 </body>
 </html>
