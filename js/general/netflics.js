@@ -180,7 +180,7 @@ Netflics.Service = function () {
     };
 
     /*
-    * @description: Method that return a specific movie overview
+    * @description: Method that return a specific movie overview and release date
     * @param movieId: The id(Number) of a specific movie
     */
     this.getMovieExtraInfoById = function (movieId) {
@@ -231,6 +231,7 @@ Netflics.Controller = function () {
 
 /*
 * @description: displays the movies galleries in the front end
+* @param moviesArray: Array with all the movies info
 */
 Netflics.ShowMoviesLists = function (moviesArray) {
     'use strict';
@@ -295,11 +296,6 @@ Netflics.getUrlVar = function (name) {
     }
 };
 
-Netflics.getMovieDescription = function (id) {
-    'use strict';
-
-};
-
 /*
 * @description: Does a search by ajax using a key word
 * @param name: name of the parameter
@@ -333,9 +329,6 @@ Netflics.Search = function (q) {
         ulResults.append(item);
     }
     ulResults.jcarousel({wrap: 'last'});
-    //http://cf2.imgobject.com/t/p/w185/
-    console.log(qResults);
-    //return qResults;
 };
 
 /*
@@ -374,7 +367,6 @@ Netflics.Login = function () {
     'use strict';
     FB.getLoginStatus(function (response) {
         var currentURL = window.location;
-        //console.log(response);
         if (response.status === 'connected') {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
