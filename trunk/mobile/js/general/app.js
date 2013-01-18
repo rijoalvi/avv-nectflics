@@ -486,23 +486,22 @@ Login = function () {
     'use strict';
     FB.getLoginStatus(function (response) {
         var currentURL = window.location;
+        console.log(response);
         if (response.status === 'connected') {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             console.log('This user is currently logged into Facebook.');
-            if (window.location.href.indexOf("movies") === -1) {
-                window.location.replace("/movies.html");
-            }
+            $('#userMessage').text('Good to see you, ' + response.name + '.');
         } else if (response.status === 'not_authorized') {
-            if (window.location.href.indexOf("movies") > -1) {
-                window.location.replace("/index.html");
+            if (window.location.href.indexOf("/mobile/movies.html") > -1 || window.location.href.indexOf("search") > -1 || window.location.href.indexOf("view-movie") > -1) {
+                window.location.replace("/mobile/index.html");
             } else {
-                if (currentURL === "http://www.acope.com/test123/mobile/" || currentURL === "http://www.acope.com/test123/mobile/index.html") { //If the user is in the index
+                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
                                 $('#userMessage').text('Good to see you, ' + response.name + '.');
-                                window.location.replace("/movies.html");
+                                window.location.replace("/mobile/movies.html");
                             });
                         } else {
                             $('#userMessage').text('User cancelled login or did not fully authorize.');
@@ -511,15 +510,15 @@ Login = function () {
                 }
             }
         } else { //If the user is not logged into Facebook
-            if (window.location.href.indexOf("movies-gallery") > -1) {
-                window.location.replace("/index.html");
+            if (window.location.href.indexOf("movies") > -1 || window.location.href.indexOf("search") > -1 || window.location.href.indexOf("view-movie") > -1) {
+                window.location.replace("/mobile/index.html");
             } else {
-                if (currentURL === "http://www.acope.com/test123/mobile/" || currentURL === "http://www.acope.com/test123/mobile/index.html") { //If the user is in the index
+                if (currentURL == "http://test7.dynamis-soft.com/mobile/" || currentURL == "http://test7.dynamis-soft.com/mobile/index.html") { //If the user is in the index
                     FB.login(function (response) {
                         if (response.authResponse) { //If the user loggin is ok it will be redirected to the movies galllery
                             FB.api('/me', function (response) {
                                 $('#userMessage').text('Good to see you, ' + response.name + '.');
-                                window.location.replace("/movies.html");
+                                window.location.replace("/mobile/movies.html");
                             });
                         } else {
                             $('#userMessage').text('User cancelled login or did not fully authorize.');
