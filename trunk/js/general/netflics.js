@@ -371,7 +371,7 @@ Netflics.Login = function () {
             var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
             console.log('This user is currently logged into Facebook.');
-            if (window.location.href.indexOf("movies-gallery") === -1 || window.location.href.indexOf("search") === -1 || window.location.href.indexOf("view-movie") === -1) {
+            if (window.location.href.indexOf("movies-gallery") === -1 && window.location.href.indexOf("search") === -1 && window.location.href.indexOf("view-movie") === -1) {
                 window.location.replace("/movies-gallery.html");
             }
             $('#userMessage').text('Good to see you, ' + response.name + '.');
